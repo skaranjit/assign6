@@ -1,5 +1,6 @@
 package assign6.visitor;
 
+import assign5.ast.*;
 import assign6.parser.*;
 
 public class ASTVisitor
