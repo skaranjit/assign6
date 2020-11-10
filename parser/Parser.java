@@ -10,7 +10,8 @@ public class Parser extends ASTVisitor
     public CompilationUnit cu = null;
     public Lexer lexer = null ;
     public Token look = null;
-
+    public Env top = null;
+    
     public Parser (Lexer lexer)
     {
         this.lexer = lexer;
@@ -62,8 +63,11 @@ public class Parser extends ASTVisitor
 
     public void visit (CompilationUnit n)
     {
+        Env savedEnv = top;
+		top = new Env(top);
         n.block = new BlockStatementNode();
         n.block.accept(this);
+        top = savedEnv;
     }
 
     public void visit (BlockStatementNode n)
@@ -93,6 +97,11 @@ public class Parser extends ASTVisitor
         n.type.accept(this);
         n.id = new IdentifierNode();
         n.id.accept(this);
+        if(top.table.containsKey(n.id.id)){
+		    error("variable name has already been used.");
+		}
+        top.put(n.id,n.type.type);
+		System.out.println("....of type: " + n.type.type.toString());
         match(';');
     }
 
