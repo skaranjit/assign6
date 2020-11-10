@@ -1,6 +1,6 @@
-package assign5.parser;
+package assign6.parser;
 
-import assign5.visitor.*;
+import assign6.visitor.*;
 
 
 public class DeclarationNode extends Node
