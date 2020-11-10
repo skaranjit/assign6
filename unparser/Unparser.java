@@ -168,8 +168,8 @@ public class Unparser extends ASTVisitor
 
         if (n.right instanceof  IdentifierNode)
             ((IdentifierNode)n.right).accept(this);
-        else if (n.right instanceof LiteralNode)
-            ((LiteralNode)n.right).accept(this);
+        else if (n.right instanceof NumNode)
+            ((NumNode)n.right).accept(this);
         else if (n.right instanceof RealNode)
             ((RealNode)n.right).accept(this);
         else {
@@ -184,9 +184,9 @@ public class Unparser extends ASTVisitor
         {
             ((IdentifierNode)n.left).accept(this);
         }
-        else if (n.left instanceof LiteralNode)
+        else if (n.left instanceof NumNode)
         {
-            ((LiteralNode)n.left).accept(this);
+            ((NumNode)n.left).accept(this);
         }
         else if (n.left instanceof RealNode)
         {
@@ -214,9 +214,9 @@ public class Unparser extends ASTVisitor
             {
                 ((IdentifierNode) n.right).accept(this);
             }
-            else if (n.right instanceof LiteralNode)
+            else if (n.right instanceof NumNode)
             {
-                ((LiteralNode) n.right).accept(this);
+                ((NumNode) n.right).accept(this);
             }
             else if (n.right instanceof RealNode)
             {
@@ -256,7 +256,7 @@ public class Unparser extends ASTVisitor
         }
     }
 
-    public void visit(LiteralNode n)
+    public void visit(NumNode n)
     {
         print("" + n.value);
     }
