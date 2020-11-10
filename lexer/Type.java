@@ -22,6 +22,7 @@ public class Type extends Word
         else
             return false;
     }
+    public boolean isArray(){ return false;}
 
     public static Type max(Type p1, Type p2)
     {
