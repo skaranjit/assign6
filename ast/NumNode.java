@@ -1,7 +1,7 @@
-package assign5.ast;
+package assign6.ast;
 
-import assign5.lexer.*;
-import assign5.visitor.*;
+import assign6.lexer.*;
+import assign6.visitor.*;
 
 public class NumNode extends Node
 {
