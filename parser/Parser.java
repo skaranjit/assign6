@@ -182,8 +182,8 @@ public class Parser extends ASTVisitor
         }
         else if (look.tag == Tag.NUM)
         {
-            rhs_assign = new LiteralNode();
-            ((LiteralNode)rhs_assign).accept(this);
+            rhs_assign = new NumNode();
+            ((NumNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.REAL)
         {
@@ -247,8 +247,8 @@ public class Parser extends ASTVisitor
             }
             else if (look.tag == Tag.NUM)
             {
-                rhs = new LiteralNode();
-                ((LiteralNode)rhs).accept(this);
+                rhs = new NumNode();
+                ((NumNode)rhs).accept(this);
             }
             else if (look.tag == Tag.REAL)
             {
@@ -293,8 +293,8 @@ public class Parser extends ASTVisitor
         }
         else if (look.tag == Tag.NUM)
         {
-            rhs_assign = new LiteralNode();
-            ((LiteralNode)rhs_assign).accept(this);
+            rhs_assign = new NumNode();
+            ((NumNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.REAL)
         {
@@ -392,8 +392,8 @@ public class Parser extends ASTVisitor
         }
         else if (look.tag == Tag.NUM)
         {
-            rhs_assign = new LiteralNode();
-            ((LiteralNode)rhs_assign).accept(this);
+            rhs_assign = new NumNode();
+            ((NumNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.REAL)
         {
@@ -476,8 +476,8 @@ public class Parser extends ASTVisitor
         }
         else if (look.tag == Tag.NUM)
         {
-            rhs_assign = new LiteralNode();
-            ((LiteralNode)rhs_assign).accept(this);
+            rhs_assign = new NumNode();
+            ((NumNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.REAL)
         {
@@ -504,7 +504,7 @@ public class Parser extends ASTVisitor
         match(';');
     }
 
-    public void visit(LiteralNode n)
+    public void visit(NumNode n)
     {
         n.value = ((Num)look).value;
         match(Tag.NUM);
@@ -538,8 +538,8 @@ public class Parser extends ASTVisitor
         }
         else if (look.tag == Tag.NUM)
         {
-            rhs_assign = new LiteralNode();
-            ((LiteralNode)rhs_assign).accept(this);
+            rhs_assign = new NumNode();
+            ((NumNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.REAL)
         {
@@ -582,8 +582,8 @@ public class Parser extends ASTVisitor
         }
         else if (look.tag == Tag.NUM)
         {
-            rhs_assign = new LiteralNode();
-            ((LiteralNode)rhs_assign).accept(this);
+            rhs_assign = new NumNode();
+            ((NumNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.REAL)
         {
