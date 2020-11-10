@@ -114,28 +114,29 @@ public class Parser extends ASTVisitor
         match(Tag.BASIC);
         if (look.toString().equals("["))
         {
-//             n.array = new ArrayTypeNode();
-//             n.array.accept(this);
-		match('[');
-		Token temp = lookahead;
-		match(Tag.NUM);
-		n.type = new Array(((Num)temp).value, p);
-		match(']');
+            n.array = new ArrayTypeNode();
+            n.array.accept(this);
+// 		match('[');
+// 		Token temp = lookahead;
+// 		match(Tag.NUM);
+// 		n.type = new Array(((Num)temp).value, p);
+// 		match(']');
         }
     }
 
-//     public void visit (ArrayTypeNode n)
-//     {
-//         match('[');
-//         n.size = ((Num)look).value;
-//         match(Tag.NUM);
-//         match(']');
-//         if (look.toString().equals("["))
-//         {
-//             n.type = new ArrayTypeNode();
-//             n.type.accept(this);
-//         }
-//     }
+    public void visit (ArrayTypeNode n)
+    {
+        match('[');
+        n.size = ((Num)look).value;
+	n.type = new Array(n.size,n.basic);
+        match(Tag.NUM);
+        match(']');
+        if (look.toString().equals("["))
+        {
+            n.type = new ArrayTypeNode();
+            n.type.accept(this);
+        }
+    }
 
     public void visit (Statements n)
     {
