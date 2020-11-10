@@ -1,6 +1,6 @@
-package assign5.ast;
+package assign6.ast;
 
-import assign5.visitor.*;
+import assign6.visitor.*;
 
 // CompilationUnit is root node
 // BlockStatementNode is just below CompilationUnit (i.e. - child of CompilationUnit)
