@@ -1,4 +1,4 @@
-package assign5.lexer;
+package assign6.lexer;
 
 public class Type extends Word
 {
