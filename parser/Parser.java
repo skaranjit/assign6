@@ -101,7 +101,7 @@ public class Parser extends ASTVisitor
 		    error("variable name has already been used.");
 		}
         top.put(n.id,n.type.type);
-		System.out.println("....of type: " + n.type.type.toString());
+		System.out.println("....of type: " + n.type.basic.toString());
         match(';');
     }
 
