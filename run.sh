@@ -1,3 +1,3 @@
 #!/bin/bash
-javac -classpath ~/Desktop/Compiler/ Main.java
-java -classpath ~/Desktop/Compiler/ assign6.Main
+javac -classpath ~/Desktop/Compiler/assign6/ Main.java
+java -classpath ~/Desktop/Compiler/assign6/ assign6.Main
