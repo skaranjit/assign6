@@ -63,9 +63,9 @@ public class ASTVisitor
         {
             ((IdentifierNode)n.right).accept(this);
         }
-        else if (n.right instanceof LiteralNode)
+        else if (n.right instanceof NumNode)
         {
-            ((LiteralNode)n.right).accept(this);
+            ((NumNode)n.right).accept(this);
         }
         else if (n.right instanceof RealNode)
         {
@@ -87,7 +87,7 @@ public class ASTVisitor
         //n.right.accept(this);
     }
 
-    public void visit(LiteralNode n)
+    public void visit(NumNode n)
     {
 
     }
