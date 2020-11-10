@@ -1,6 +1,6 @@
-package assign5.ast;
+package assign6.ast;
 
-import assign5.visitor.ASTVisitor;
+import assign6.visitor.*;
 
 public class ArrayIDNode extends IdentifierNode
 {
