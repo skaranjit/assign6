@@ -1,7 +1,7 @@
-package assign5.parser;
+package assign6.parser;
 
-import assign5.lexer.*;
-import assign5.visitor.*;
+import assign6.lexer.*;
+import assign6.visitor.*;
 
 public class LiteralNode extends Node
 {
