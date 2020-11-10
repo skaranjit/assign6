@@ -115,7 +115,9 @@ public class Parser extends ASTVisitor
         if (look.toString().equals("["))
         {
             n.array = new ArrayTypeNode();
+	    n.array.ofType = n.basic;
             n.array.accept(this);
+	    n.type = new Array(n.array.size,n.ofType);
 // 		match('[');
 // 		Token temp = lookahead;
 // 		match(Tag.NUM);
@@ -128,7 +130,7 @@ public class Parser extends ASTVisitor
     {
         match('[');
         n.size = ((Num)look).value;
-	n.type = new Array(n.size,n.basic);
+	
         match(Tag.NUM);
         match(']');
         if (look.toString().equals("["))
