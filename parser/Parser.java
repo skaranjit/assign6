@@ -100,7 +100,7 @@ public class Parser extends ASTVisitor
         if(top.table.containsKey(n.id.id)){
 		    error("variable name has already been used.");
 		}
-        top.put(n.id,n.type.type);
+        top.put(n.id,n.type.basic);
 		System.out.println("....of type: " + n.type.basic.toString());
         match(';');
     }
