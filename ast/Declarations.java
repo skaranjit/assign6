@@ -1,6 +1,6 @@
-package assign5.ast;
+package assign6.ast;
 
-import assign5.visitor.*;
+import assign6.visitor.*;
 
 
 public class Declarations extends Node
