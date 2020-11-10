@@ -1,11 +1,12 @@
 package assign6.ast;
 
 import assign6.visitor.*;
-
+import assign6.lexer.*;
 public class ArrayTypeNode extends TypeNode
 {
     public TypeNode type;
     public int size = 1;
+    public Type ofType;
 
     public ArrayTypeNode()
     {
