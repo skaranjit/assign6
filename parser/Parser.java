@@ -1,7 +1,7 @@
-package assign5.parser;
+package assign6.parser;
 
-import assign5.visitor.*;
-import assign5.lexer.*;
+import assign6.visitor.*;
+import assign6.lexer.*;
 import java.io.*;
 
 public class Parser extends ASTVisitor
