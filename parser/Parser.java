@@ -117,7 +117,7 @@ public class Parser extends ASTVisitor
             n.array = new ArrayTypeNode();
 	    n.array.ofType = n.basic;
             n.array.accept(this);
-	    n.type = new Array(n.array.size,n.array.ofType);
+	    n.basic = new Array(n.array.size,n.array.ofType);
 // 		match('[');
 // 		Token temp = lookahead;
 // 		match(Tag.NUM);
