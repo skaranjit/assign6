@@ -5,7 +5,7 @@ import assign6.visitor.*;
 
 public class IfStatementNode extends StatementNode
 {
-    public ParenthesesNode condition;
+    public ParenNode condition;
     public StatementNode stmt;
     public StatementNode elseStmt;
 
@@ -14,9 +14,9 @@ public class IfStatementNode extends StatementNode
 
     }
 
-    public ConditionalNode(Node node, StatementNode stmt, StatementNode elseStmt)
+    public ConditionalNode(ParenNode condition, StatementNode stmt, StatementNode elseStmt)
     {
-        this.condition = node;
+        this.condition = condition;
         this.stmt = stmt;
         this.elseStmt = elseStmt;
     }
