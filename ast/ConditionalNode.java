@@ -5,7 +5,7 @@ import assign6.visitor.*;
 
 public class ConditionalNode extends StatementNode
 {
-    public ParenNode condition;
+    public Node condition;
     public StatementNode stmt;
     public StatementNode elseStmt;
 
@@ -14,7 +14,7 @@ public class ConditionalNode extends StatementNode
 
     }
 
-    public ConditionalNode(ParenNode condition, StatementNode stmt, StatementNode elseStmt)
+    public ConditionalNode(Node condition, StatementNode stmt, StatementNode elseStmt)
     {
         this.condition = condition;
         this.stmt = stmt;
