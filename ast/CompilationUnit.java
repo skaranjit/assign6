@@ -8,6 +8,7 @@ import assign6.visitor.*;
 public class CompilationUnit extends Node
 {
     public BlockStatementNode block;
+    public Env symbolTable;
 
     public CompilationUnit()
     {
