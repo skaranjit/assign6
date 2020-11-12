@@ -5,7 +5,7 @@ import assign6.visitor.*;
 
 public class WhileNode extends StatementNode
 {
-    public Node condition;
+    public ParenNode condition;
     public StatementNode stmt;
 
     public WhileNode()
@@ -13,7 +13,7 @@ public class WhileNode extends StatementNode
 
     }
 
-    public WhileNode(Node node, StatementNode stmt)
+    public WhileNode(ParenNode node, StatementNode stmt)
     {
         this.condition = node;
         this.stmt = stmt;
