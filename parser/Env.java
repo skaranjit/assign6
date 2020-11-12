@@ -8,7 +8,7 @@ public class Env {
 
 	public Hashtable<String,Type> table;
 	protected Env prev;
-	public Env() { table = new Hashtable<Node,Type>();}
+	public Env() { table = new Hashtable<String,Type>();}
 	public Env(Env n) { table = new Hashtable<String,Type>(); prev = n; }
 
 	public void put(String w, Type i) { table.put(w, i); }
