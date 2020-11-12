@@ -67,6 +67,7 @@ public class Parser extends ASTVisitor
 	top = new Env(top);
         n.block = new BlockStatementNode();
         n.block.accept(this);
+	n.symbolTable = top;
         top = savedEnv;
     }
 
