@@ -138,7 +138,33 @@ public class TypeChecker extends ASTVisitor
     }
     public void visit(AssignmentNode n)
     {
-       System.out.println("Debug: TypeChecker");
+    	System.out.println("Debug: TypeChecker in Assignment Node");
+    	Type left;
+        if(!(top.table.containsKey(n.left.id)))
+        {
+            error("Variable " + n.left.id +" has not been declared.");
+        }
+        left = top.table.get(n.left.id);
+		if (n.right instanceof  IdentifierNode){
+			Type right;
+        	if(!(top.table.containsKey(n.right.id)))
+        	{
+           		 error("Variable " + n.right.id +" has not been declared.");
+        	}
+        	right = top.table.get(a.left.id);
+            ((IdentifierNode)n.right).accept(this);
+		}
+        else if (n.right instanceof NumNode){
+        	
+			((NumNode)n.right).accept(this);
+		}
+        else if (n.right instanceof RealNode)
+            ((RealNode)n.right).accept(this);
+        else {
+            ((BinExprNode)n.right).accept(this);
+        }
+        println(";");
+      
     }
 
     public void visit(BinExprNode n)
