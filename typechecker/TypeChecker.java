@@ -28,7 +28,31 @@ public class TypeChecker extends ASTVisitor
             visit(cu);
    }
 
-   
+   public void getType(IdentifierNode a){
+        String x = a.id;
+        if(isDigit(x))
+        {
+            rhsExp =  Type.Int;
+            hasbeenInitialized = true; /////////////////////////////////////
+        }
+        else if(isFloat(x))
+        {
+            rhsExp =  Type.Float;
+            hasbeenInitialized = true;/////////////////////////////////////
+        }
+        else if(x.equals("true") || x.equals("false"))
+        {
+            rhsExp = Type.Boolean;
+        }
+        else if(top.table.get(a.id) == null)
+        {
+            error(  a.id + " variable not declared!");
+        } 
+        else
+        {
+            rhsExp = top.table.get(x);
+        }
+    }
 
     boolean isDigit(final String str) {
         for (char c : str.toCharArray()) {
@@ -67,11 +91,9 @@ public class TypeChecker extends ASTVisitor
 
     public void visit (CompilationUnit n)
     {
-        Env savedEnv = top;
-		top = new Env(top);
-        n.block = new BlockStatementNode();
-        n.block.accept(this);
-        top = savedEnv;
+        top = new Env();
+        top.table = n.symbolTable.table;
+        visit(n.block);
     }
 
     public void visit (BlockStatementNode n)
@@ -101,11 +123,7 @@ public class TypeChecker extends ASTVisitor
         n.type.accept(this);
         n.id = new IdentifierNode();
         n.id.accept(this);
-        if(top.table.containsKey(n.id.id)){
-		    error("variable name has already been used.");
-		}
-        top.put(n.id,n.type.basic);
-		System.out.println("....of type: " + n.type.basic.toString());
+       
         match(';');
     }
 
