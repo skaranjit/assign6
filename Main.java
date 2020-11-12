@@ -4,6 +4,7 @@ import assign6.ast.*;
 import assign6.lexer.* ;
 import assign6.parser.* ;
 import assign6.unparser.*;
+import assign6.typeChecker.*;
 
 
 public class Main {
