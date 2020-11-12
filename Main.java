@@ -10,6 +10,7 @@ public class Main {
     public static void main (String[] args) {
         Lexer lexer = new Lexer();
         Parser parser = new Parser(lexer);
+        TypeChecker typeCheck = new TypeChecker(parser);
         Unparser unparser = new Unparser(parser);
         
     }
