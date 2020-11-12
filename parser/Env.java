@@ -13,7 +13,7 @@ public class Env {
 
 	public void put(Node w, Type i) { table.put(w, i); }
 
-	public Type get(String w) {
+	public Type get(Node w) {
 		for( Env e = this; e != null; e = e.prev ) {
 			Type found = (Type)(e.table.get(w));
 			if( found != null ) return found;
