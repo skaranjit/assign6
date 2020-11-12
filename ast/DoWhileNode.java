@@ -5,14 +5,14 @@ import assign6.visitor.*;
 public class DoWhileNode extends StatementNode
 {
     public StatementNode stmt;
-    public ParenNode condition;
+    public Node condition;
 
     public DoWhileNode()
     {
 
     }
 
-    public DoWhileNode(ParenNode node, StatementNode stmt)
+    public DoWhileNode(Node node, StatementNode stmt)
     {
         this.condition = node;
         this.stmt = stmt;
