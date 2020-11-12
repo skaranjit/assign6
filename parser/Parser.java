@@ -111,6 +111,14 @@ public class Parser extends ASTVisitor
             n.basic = Type.Int;
         else if (look.toString().equals("float"))
             n.basic = Type.Float;
+	else if(look.toString().equals("char"))
+		n.basic = Type.Char;
+	else if(look.toString().equals("String"))
+		n.basic = Type.String;
+	else if(look.toString().equals("bool"))
+		n.basic = Type.Bool;
+	else
+		error("Invalid Declaration!");
         match(Tag.BASIC);
         if (look.toString().equals("["))
         {
