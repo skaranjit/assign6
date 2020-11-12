@@ -89,7 +89,7 @@ public class Parser extends ASTVisitor
             n.decls = new Declarations();
             n.decls.accept(this);
         }
-	else error("Invalid Declarations");
+	
     }
 
     public void visit(DeclarationNode n)
