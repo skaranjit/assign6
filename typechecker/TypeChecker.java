@@ -158,10 +158,7 @@ public class TypeChecker extends ASTVisitor
         }
     }
 
-    Node parseBinExprNode(Node lhs, int precedence)
-    {
-        System.out.println("Debug: TypeChecker");
-    }
+   
 
     public void visit(BreakNode n)
     {
