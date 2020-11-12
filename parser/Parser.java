@@ -104,7 +104,7 @@ public class Parser extends ASTVisitor
 		}
         top.put(n.id.id,n.type.basic);
 		System.out.println("....of type: " + n.type.basic.toString());
-	if(look.toString().equaks(";")){
+	if(look.toString().equals(";")){
 		match(';');
 	}else error("Missed ';' ");
     }
@@ -231,7 +231,7 @@ public class Parser extends ASTVisitor
         else
             n.right = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
-      if(look.toString().equaks(";")){
+      if(look.toString().equals(";")){
 		match(';');
 	}else error("Missed ';' ");
     }
@@ -303,7 +303,7 @@ public class Parser extends ASTVisitor
     public void visit(BreakNode n)
     {
         match(Tag.BREAK);
-        if(look.toString().equaks(";")){
+        if(look.toString().equals(";")){
 		match(';');
 	}else error("Missed ';' ");
     }
@@ -346,7 +346,7 @@ public class Parser extends ASTVisitor
         else
             n.condition = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
-        if(look.toString().equaks(")")){
+        if(look.toString().equals(")")){
 		match(')');
 	}else error("Missed ')' ");
         switch (look.tag)
@@ -447,7 +447,7 @@ public class Parser extends ASTVisitor
         else
             n.condition = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
-       if(look.toString().equaks(")")){
+       if(look.toString().equals(")")){
 		match(')');
 	}else error("Missed ')' ");
         n.stmt = new StatementNode();
@@ -532,10 +532,10 @@ public class Parser extends ASTVisitor
         else
             n.condition = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
-        if(look.toString().equaks(")")){
+        if(look.toString().equals(")")){
 		match(')');
 	}else error("Missed ')' ");
-        if(look.toString().equaks(";")){
+        if(look.toString().equals(";")){
 		match(';');
 	}else error("Missed ';' ");
     }
@@ -598,7 +598,7 @@ public class Parser extends ASTVisitor
         else
             n.node = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
-      if(look.toString().equaks("]")){
+      if(look.toString().equals("]")){
 		match(']');
 	}else error("Missed ']' ");
         if (look.toString().equals("["))
@@ -644,7 +644,7 @@ public class Parser extends ASTVisitor
         else
             n.node = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
-        if(look.toString().equaks(")")){
+        if(look.toString().equals(")")){
 		match(')');
 	}else error("Missed ')' ");
     }
