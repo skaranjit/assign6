@@ -145,15 +145,15 @@ public class TypeChecker extends ASTVisitor
             error("Variable " + n.left.id +" has not been declared.");
         }
         left = top.table.get(n.left.id);
-		if (n.right instanceof  IdentifierNode){
-			Type right;
-        	if(!(top.table.containsKey(n.right.id)))
-        	{
-           		 error("Variable " + n.right.id +" has not been declared.");
-        	}
-        	right = top.table.get(a.left.id);
-            ((IdentifierNode)n.right).accept(this);
+	if (n.right instanceof  IdentifierNode){
+		Type right;
+		if(!(top.table.containsKey(((IdentifierNode)n.right).id)))
+		{
+			 error("Variable " + ((IdentifierNode)n.right).id +" has not been declared.");
 		}
+		right = top.table.get(((IdentifierNode)n.right).id);
+ 	       ((IdentifierNode)n.right).accept(this);
+	}
         else if (n.right instanceof NumNode){
         	
 			((NumNode)n.right).accept(this);
@@ -163,7 +163,6 @@ public class TypeChecker extends ASTVisitor
         else {
             ((BinExprNode)n.right).accept(this);
         }
-        println(";");
       
     }
 
