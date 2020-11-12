@@ -8,6 +8,7 @@ public class Type extends Word
     public static final Type Float = new Type("float", Tag.BASIC, 8);
     public static final Type Char = new Type("char", Tag.BASIC, 1);
     public static final Type Bool = new Type("bool", Tag.BASIC, 1);
+    public static final Type String = new Type("string", Tag.BASIC,100);
 
     public Type(String s, int tag, int w)
     {
