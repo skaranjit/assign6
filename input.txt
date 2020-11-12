@@ -1,6 +1,6 @@
 {
     int i ; int j ; float v ; float x ; float[100] a ;
-    int[100][100] f; 
+    int[100][100] f; cha a;
     while( true ) {
         do i = i+1 ; while( a[i] < v) ;
         do j = j-1 ; while( a[j] > v) ;
