@@ -42,7 +42,7 @@ public class TypeChecker extends ASTVisitor
         }
         else if(x.equals("true") || x.equals("false"))
         {
-            rhsExp = Type.Boolean;
+            rhsExp = Type.Bool;
         }
         else if(top.table.get(a.id) == null)
         {
@@ -98,12 +98,12 @@ public class TypeChecker extends ASTVisitor
 
     public void visit (BlockStatementNode n)
     {
-        match('{');
+        
         n.decls = new Declarations();
         n.decls.accept(this);
         n.stmts = new Statements();
         n.stmts.accept(this);
-        match('}');
+
     }
 
     public void visit(Declarations n)
