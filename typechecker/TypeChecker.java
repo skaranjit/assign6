@@ -10,6 +10,7 @@ public class TypeChecker extends ASTVisitor
 {
   public Parser parser = null;
     public Lexer lexer = null ;  
+    public Token look = null;
     public CompilationUnit cu = null;
     public Env top = null;
     public Type rhsExp = null;
@@ -80,7 +81,22 @@ public class TypeChecker extends ASTVisitor
         throw new Error ("near line " + lexer.line + ": " + s);
     }
 
-    
+    void match(int t)
+    {
+        try
+        {
+            if (look.tag == t)
+            {
+                move();
+            }
+            else
+                error("Syntax error");
+        }
+        catch(Error e)
+        {
+
+        }
+    }
 
     public boolean checkOperator(String x)
     {
@@ -98,39 +114,43 @@ public class TypeChecker extends ASTVisitor
 
     public void visit (BlockStatementNode n)
     {
-        
-        n.decls = new Declarations();
         n.decls.accept(this);
-        n.stmts = new Statements();
         n.stmts.accept(this);
 
     }
 
     public void visit(Declarations n)
     {
-       System.out.println("Debug: TypeChecker");
+
     }
 
     public void visit(DeclarationNode n)
     {
-	 System.out.println("Debug: TypeChecker");
+
     }
 
     public void visit(TypeNode n)
     {
-         System.out.println("Debug: TypeChecker");
+       //  System.out.println("Debug: TypeChecker");
     }
 
     public void visit (ArrayTypeNode n)
     {
-         System.out.println("Debug: TypeChecker");
+      //   System.out.println("Debug: TypeChecker");
     }
 
     public void visit (Statements n)
     {
-       System.out.println("Debug: TypeChecker");
+       //System.out.println("Debug: TypeChecker");
+       if (n.stmts != null){
+            n.stmt.accept(this);
+            n.stmts.accept(this);
+        }
     }
+    public void visit(StatementNode n)
+    {
 
+    }
     public void visit(AssignmentNode n)
     {
        System.out.println("Debug: TypeChecker");
