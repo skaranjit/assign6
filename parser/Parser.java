@@ -198,7 +198,8 @@ public class Parser extends ASTVisitor
     {
         n.left = new IdentifierNode();
         n.left.accept(this);
-        match('=');
+	if(look.toString().equals("=")) match('=');
+        else error("Invalid Declarations");
         Node rhs_assign = null;
         if (look.tag == Tag.ID)
         {
