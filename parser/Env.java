@@ -1,8 +1,9 @@
 
 package assign6.parser;
+
 import java.util.*; 
 import assign6.lexer.*; 
-
+import assign6.ast.*;
 public class Env {
 
 	public Hashtable<Node,Type> table;
