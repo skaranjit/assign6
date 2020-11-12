@@ -6,14 +6,14 @@ import assign6.lexer.*;
 import assign6.ast.*;
 public class Env {
 
-	public Hashtable<Node,Type> table;
+	public Hashtable<String,Type> table;
 	protected Env prev;
 	public Env() { table = new Hashtable<Node,Type>();}
-	public Env(Env n) { table = new Hashtable<Node,Type>(); prev = n; }
+	public Env(Env n) { table = new Hashtable<String,Type>(); prev = n; }
 
-	public void put(Node w, Type i) { table.put(w, i); }
+	public void put(String w, Type i) { table.put(w, i); }
 
-	public Type get(Node w) {
+	public Type get(String w) {
 		for( Env e = this; e != null; e = e.prev ) {
 			Type found = (Type)(e.table.get(w));
 			if( found != null ) return found;
