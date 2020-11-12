@@ -81,22 +81,7 @@ public class TypeChecker extends ASTVisitor
         throw new Error ("near line " + lexer.line + ": " + s);
     }
 
-    void match(int t)
-    {
-        try
-        {
-            if (look.tag == t)
-            {
-                move();
-            }
-            else
-                error("Syntax error");
-        }
-        catch(Error e)
-        {
-
-        }
-    }
+    
 
     public boolean checkOperator(String x)
     {
