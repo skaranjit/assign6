@@ -3,7 +3,7 @@ package assign6.ast;
 import assign6.visitor.*;
 
 
-public class IfStatementNode extends StatementNode
+public class ConditionalNode extends StatementNode
 {
     public ParenNode condition;
     public StatementNode stmt;
