@@ -115,13 +115,13 @@ public class TypeChecker extends ASTVisitor
     {
     	System.out.println("Debug: TypeChecker in Assignment Node");
     	Type left;
-        left = getType(n.left.id);
+        left = getType(n.left);
 	lhsExp = left;
 	n.left.accept(this);
 	
 	if (n.right instanceof  IdentifierNode){
 		Type right;
-		right = getType(((IdentifierNode)n.right).id);
+		right = getType(((IdentifierNode)n.right));
 		if(left == right) ((IdentifierNode)n.right).accept(this);
 		else error("Type mismatch: "+ n.left.id+" of type " +left + " but " +((IdentifierNode)n.right).id + " of type " + right);
 	       
@@ -145,7 +145,7 @@ public class TypeChecker extends ASTVisitor
     	 if (n.left instanceof IdentifierNode)
         {
 		Type right;
-		right = getType(((IdentifierNode)n.right).id);
+		right = getType(((IdentifierNode)n.right));
 		if(lhsExp == right) ((IdentifierNode)n.left).accept(this);
 		else error("Type mismatch: "+ lhs +"  type is not compatible with " +((IdentifierNode)n.right).id + " of type " + right);
          
