@@ -120,22 +120,21 @@ public class TypeChecker extends ASTVisitor
 	n.left.accept(this);
 	
 	if (n.right instanceof  IdentifierNode){
-		Type right;
-		right = getType(((IdentifierNode)n.right));
-		if(left == right) ((IdentifierNode)n.right).accept(this);
-		else error("Type mismatch: "+ n.left.id+" of type " +left + " but " +((IdentifierNode)n.right).id + " of type " + right);
+		((IdentifierNode)n.right).accept(this);
+		
 	       
 	}
     	else if (n.right instanceof NumNode){
-    		if(left == Type.Int) ((NumNode)n.right).accept(this);
-		else error("Type mismatch: " + n.left.id+" of type " +left + " but " +((NumNode)n.right).value + " of type int");
+    		((NumNode)n.right).accept(this);
+		
 	}
 	else if (n.right instanceof RealNode){
-	  	if(left== Type.Float) ((RealNode)n.right).accept(this);
-		else	error("Type mismatch: "+n.left.id+" of type " +left + " but " +((RealNode)n.right).value + " of type float");        
+	  	((RealNode)n.right).accept(this);
+		       
         }
 	else {
             ((BinExprNode)n.right).accept(this);
+	    top.replace(n.left,rhs);
         }
       
     }
@@ -144,28 +143,20 @@ public class TypeChecker extends ASTVisitor
     {
     	 if (n.left instanceof IdentifierNode)
         {
-		Type right;
-		right = getType(((IdentifierNode)n.right));
-		if(lhsExp == right) ((IdentifierNode)n.left).accept(this);
-		else error("Type mismatch: "+ lhsExp +"  type is not compatible with " +((IdentifierNode)n.right).id + " of type " + right);
-         
-        }
+		((IdentifierNode)n.left).accept(this);
+	}
         else if (n.left instanceof NumNode)
         {
-// 	    	if(lhsExp == Type.Int) ((NumNode)n.left).accept(this);
-// 		else error("Type mismatch: " + n.left.value+" of type " +left + " but " +((NumNode)n.right).value + " of type int");
+	    ((NumNode)n.left).accept(this);		
         }
         else if (n.left instanceof RealNode)
         {
-// 		if(lhsExp == Type.Int) ((RealNode)n.left).accept(this);
-// 		else error("Type mismatch: " + n.left.id+" of type " +left + " but " +((NumNode)n.right).value + " of type int");
-
-            
-        }
+		((RealNode)n.left).accept(this);
+	}
         else if (n.left instanceof BooleanNode)
-        {
-            ((BooleanNode)n.left).accept(this);
-        }
+        {	
+	    ((BooleanNode)n.left).accept(this);
+	}
         else if (n.left instanceof ParenNode)
         {
             ((ParenNode)n.left).accept(this);
@@ -218,10 +209,13 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(WhileNode n)
     {
+    	
     }
 
     public void visit(BooleanNode n)
     {
+    	    if(lhsExp == Type.Bool) ((BooleanNode)n.left).accept(this);
+	    else error("TypeMismatch");
     }
 
     public void visit(DoWhileNode n)
@@ -230,14 +224,34 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(NumNode n)
     {
+    	    rhsExp = lhsExp;
+	    if(lhsExp == Type.Float){
+			rhsExp = Type.Float;
+	    }
+	    else  error("Type mismatch: " +lhsExp + " of type " +left + " but " +n.value + " of type int");
     }
 
     public void visit(RealNode n)
     {
+    	rhsExp = lhsExp;
+     	if(lhsExp == Type.Int || lhsExp == Type.Float){
+		rhsExp = Type.Float;
+	}
+	else error("Type mismatch: " +lhsExp + " type is not compatible with " + n.value + " of type int");
     }
 
     public void visit(IdentifierNode n)
     {
+    	rhsExp = lhsExp;
+    	Type right;
+	right = getType(n.id);
+	if(lhsExp == right){
+		
+	} 
+	elseif((right == Type.Int && lhsExp == Type.Float) || (right == Type.Float && lhsExp == Type.Int)){
+		rhsExp = Type.Float;
+	}
+	else error("Type mismatch: "+ lhsExp +" type is not compatible with" +left + " but " +n.id + " of type " + right);
     }
 
     public void visit (ArrayIDNode n)
