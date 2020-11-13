@@ -159,7 +159,7 @@ public class TypeChecker extends ASTVisitor
 	}
     	else if (n.right instanceof NumNode){
     		if(left == Type.Int) ((NumNode)n.right).accept(this);
-		else error("Type mismatch");
+		else error("Type mismatch: " n.left.id+" of type " +left + " but " +((NumNode)n.right).id + " of type " + right););
 	}
 	else if (n.right instanceof RealNode){
 	  	if(left== Type.Float) ((RealNode)n.right).accept(this);
