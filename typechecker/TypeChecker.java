@@ -76,11 +76,9 @@ public class TypeChecker extends ASTVisitor
         return true;
     }
    
-    void error(String s)
-    {
-        throw new Error ("near line " + lexer.line + ": " + s);
-    }
-
+	void error (String s){
+		throw new Error ("near line " + this.lexer.line + ": " + s);
+	}
     
 
     public boolean checkOperator(String x)
