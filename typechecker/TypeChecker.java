@@ -152,27 +152,13 @@ public class TypeChecker extends ASTVisitor
 		right = top.table.get(((IdentifierNode)n.right).id);
  	       ((IdentifierNode)n.right).accept(this);
 	}
-    else if (n.right instanceof NumNode){
-    	switch(left){
-			case left.Int:
-				((NumNode)n.right).accept(this);
-				break;
-			default:
-				error("Type mismatch");
-				break;
-		}
+    	else if (n.right instanceof NumNode){
+    		if(left == Type.Int) ((NumNode)n.right).accept(this);
+		else error("Type mismatch");
 	}
-    else if (n.right instanceof RealNode){
-		
-	  	switch(left){
-			case left.Float:
-				((RealNode)n.right).accept(this);
-				break;
-			default:
-				error("Type mismatch");
-				break;
-		}
-            
+	else if (n.right instanceof RealNode){
+	  	if(left== Type.Float) ((RealNode)n.right).accept(this);
+		else	error("Type mismatch");           
         }
 	else {
             ((BinExprNode)n.right).accept(this);
