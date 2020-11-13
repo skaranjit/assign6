@@ -152,7 +152,7 @@ public class TypeChecker extends ASTVisitor
 		right = top.table.get(((IdentifierNode)n.right).id);
 		
  	       ((IdentifierNode)n.right).accept(this);
-	       System.out.println( "Debug: Right: "+ (IdentifierNode)n.right).id);
+	       System.out.println( "Debug: Right: "+ ((IdentifierNode)n.right).id);
 	}
     	else if (n.right instanceof NumNode){
     		if(left == Type.Int) ((NumNode)n.right).accept(this);
