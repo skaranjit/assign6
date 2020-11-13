@@ -244,14 +244,14 @@ public class TypeChecker extends ASTVisitor
     {
     	rhsExp = lhsExp;
     	Type right;
-	right = getType(n.id);
+	right = getType(n);
 	if(lhsExp == right){
-		continue;
+		
 	} 
 	else if((right == Type.Int && lhsExp == Type.Float) || (right == Type.Float && lhsExp == Type.Int)){
 		rhsExp = Type.Float;
 	}
-	else error("Type mismatch: "+ lhsExp +" type is not compatible with" +left + " but " +n.id + " of type " + right);
+	else error("Type mismatch: "+ lhsExp +" type is not compatible with " +n.id + " of type " + right);
     }
 
     public void visit (ArrayIDNode n)
