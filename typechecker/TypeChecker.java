@@ -224,7 +224,7 @@ public class TypeChecker extends ASTVisitor
     	rhsExp = lhsExp;
     	Type right;
 	right = getType(n);
-	System.out.println("Debug: Print type: " + right);
+	//System.out.println("Debug: Print type: " + right);
 	if(lhsExp == right){ rhsExp = lhsExp; }
 	else if((right == Type.Int && lhsExp == Type.Float) || (right == Type.Float && lhsExp == Type.Int)){
 		rhsExp = Type.Float;
