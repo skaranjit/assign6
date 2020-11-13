@@ -101,12 +101,10 @@ public class TypeChecker extends ASTVisitor
 		       
         }
 	else {
-            ((BinExprNode)n.right).accept(this);
-	    System.out.println("The left identifier: " +n.left.id+ " of type: "+ lhsExp + " has changed to type: " + rhsExp);
-	    
-	    top.table.replace(n.left.id,rhsExp);
+            ((BinExprNode)n.right).accept(this); 
         }
-      
+       System.out.println("The left identifier: " +n.left.id+ " of type: "+ lhsExp + " has changed to type: " + rhsExp);
+       top.table.replace(n.left.id,rhsExp);
     }
 
     public void visit(BinExprNode n)
