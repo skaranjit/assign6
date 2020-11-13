@@ -93,7 +93,7 @@ public class TypeChecker extends ASTVisitor
     public void visit (CompilationUnit n)
     {
         top = new Env();
-        top.table = n.symbolTable.table;
+        top = n.symbolTable;
         visit(n.block);
     }
 
