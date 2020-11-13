@@ -66,7 +66,7 @@ public class TypeChecker extends ASTVisitor
 	{
 		 error("Variable " + x +" has not been declared.");
 	}
-	return top.table.get(a);
+	return top.table.get(x);
    }
    public void visit (CompilationUnit n)
    {
