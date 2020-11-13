@@ -27,14 +27,7 @@ public class TypeChecker extends ASTVisitor
             visit(this.parser.cu);
    }
    
-   public Type getType(IdentifierNode a){
-        String x = a.id;
-	if(!(top.table.containsKey(x)
-	{
-		 error("Variable " + x +" has not been declared.");
-	}
-	return top.table.get(a);
-   }
+  
 
     boolean isDigit(final String str) {
         for (char c : str.toCharArray()) {
@@ -56,10 +49,9 @@ public class TypeChecker extends ASTVisitor
         }
         return true;
     }
-   
-	void error (String s){
-		throw new Error ("near line " + this.parser.lexer.line + ": " + s);
-	}
+    void error (String s){
+	throw new Error ("near line " + this.parser.lexer.line + ": " + s);
+    }
     
 
     public boolean checkOperator(String x)
@@ -68,9 +60,16 @@ public class TypeChecker extends ASTVisitor
         {return true;}
         return false;
     }
-
-    public void visit (CompilationUnit n)
-    {
+    public Type getType(IdentifierNode a){
+        String x = a.id;
+	if(!(top.table.containsKey(x)))
+	{
+		 error("Variable " + x +" has not been declared.");
+	}
+	return top.table.get(a);
+   }
+   public void visit (CompilationUnit n)
+   {
         top = new Env();
         top = n.symbolTable;
         visit(n.block);
@@ -153,13 +152,13 @@ public class TypeChecker extends ASTVisitor
         }
         else if (n.left instanceof NumNode)
         {
-	    	if(lhsExp == Type.Int) ((NumNode)n.left).accept(this);
-		else error("Type mismatch: " + n.left.value+" of type " +left + " but " +((NumNode)n.right).value + " of type int");
+// 	    	if(lhsExp == Type.Int) ((NumNode)n.left).accept(this);
+// 		else error("Type mismatch: " + n.left.value+" of type " +left + " but " +((NumNode)n.right).value + " of type int");
         }
         else if (n.left instanceof RealNode)
         {
-		if(lhsExp == Type.Int) ((RealNode)n.left).accept(this);
-		else error("Type mismatch: " + n.left.id+" of type " +left + " but " +((NumNode)n.right).value + " of type int");
+// 		if(lhsExp == Type.Int) ((RealNode)n.left).accept(this);
+// 		else error("Type mismatch: " + n.left.id+" of type " +left + " but " +((NumNode)n.right).value + " of type int");
 
             
         }
