@@ -200,7 +200,6 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(NumNode n)
     {
-    	    rhsExp = lhsExp;
 	    if(lhsExp == Type.Int){}
 	    else if(lhsExp == Type.Float){
 			rhsExp = Type.Float;
@@ -210,7 +209,6 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(RealNode n)
     {
-    	rhsExp = lhsExp;
      	if(lhsExp == Type.Int || lhsExp == Type.Float){
 		rhsExp = Type.Float;
 	}
@@ -219,7 +217,6 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(IdentifierNode n)
     {
-    	rhsExp = lhsExp;
     	Type right;
 	right = getType(n);
 	//System.out.println("Debug: Print type: " + right);
