@@ -150,7 +150,9 @@ public class TypeChecker extends ASTVisitor
 			 error("Variable " + ((IdentifierNode)n.right).id +" has not been declared.");
 		}
 		right = top.table.get(((IdentifierNode)n.right).id);
+		
  	       ((IdentifierNode)n.right).accept(this);
+	       System.out.println( "Debug: Right: "+ n.right.id);
 	}
     	else if (n.right instanceof NumNode){
     		if(left == Type.Int) ((NumNode)n.right).accept(this);
