@@ -175,12 +175,18 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(ConditionalNode n)
     {
-       
+       n.condition.accept(this);
+        n.stmt.accept(this);
+        if (n.elseStmt != null)
+        {
+            n.elseStmt.accept(this);
+        }
     }
 
     public void visit(WhileNode n)
     {
-    	
+    	n.condition.accept(this);
+        n.stmt.accept(this);
     }
 
     public void visit(BooleanNode n)
@@ -191,6 +197,8 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(DoWhileNode n)
     {
+    	n.stmt.accept(this);
+        n.condition.accept(this);
     }
 
     public void visit(NumNode n)
