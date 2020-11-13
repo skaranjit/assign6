@@ -204,7 +204,8 @@ public class TypeChecker extends ASTVisitor
     public void visit(NumNode n)
     {
     	    rhsExp = lhsExp;
-	    if(lhsExp == Type.Float){
+	    if(lhsExp == Type.Int){}
+	    else if(lhsExp == Type.Float){
 			rhsExp = Type.Float;
 	    }
 	    else  error("Type mismatch: " +lhsExp + " type is not compatible with " +n.value + " of type int");
