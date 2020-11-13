@@ -152,7 +152,7 @@ public class TypeChecker extends ASTVisitor
 		}
 		right = top.table.get(((IdentifierNode)n.right).id);
 		if(left == right) ((IdentifierNode)n.right).accept(this);
-		else error("Typemismatch: "+ n.left.id+" of type " +left + "but " +((IdentifierNode)n.right).id + " of type " + right);
+		else error("Type mismatch: "+ n.left.id+" of type " +left + " but " +((IdentifierNode)n.right).id + " of type " + right);
 		System.out.println( "Debug: Right: "+ ((IdentifierNode)n.right).id);
  	       ((IdentifierNode)n.right).accept(this);
 	       
