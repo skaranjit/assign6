@@ -9,8 +9,6 @@ import java.io.*;
 public class TypeChecker extends ASTVisitor
 {
   public Parser parser = null;
-    public Lexer lexer = null ;  
-    public Token look = null;
     public CompilationUnit cu = null;
     public Env top = null;
     public Type rhsExp = null;
@@ -77,7 +75,7 @@ public class TypeChecker extends ASTVisitor
     }
    
 	void error (String s){
-		throw new Error ("near line " + this.lexer.line + ": " + s);
+		throw new Error ("near line " + this.parser.lexer.line + ": " + s);
 	}
     
 
