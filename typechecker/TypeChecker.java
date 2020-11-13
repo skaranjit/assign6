@@ -134,7 +134,7 @@ public class TypeChecker extends ASTVisitor
         }
 	else {
             ((BinExprNode)n.right).accept(this);
-	    top.replace(n.left,rhsExp);
+	    top.table.replace(n.left,rhsExp);
         }
       
     }
@@ -214,7 +214,7 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(BooleanNode n)
     {
-    	    if(lhsExp == Type.Bool) 
+    	    if(lhsExp == Type.Bool) {}
 	    else error("TypeMismatch");
     }
 
