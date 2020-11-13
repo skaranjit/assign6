@@ -147,7 +147,7 @@ public class TypeChecker extends ASTVisitor
 		Type right;
 		right = getType(((IdentifierNode)n.right));
 		if(lhsExp == right) ((IdentifierNode)n.left).accept(this);
-		else error("Type mismatch: "+ lhs +"  type is not compatible with " +((IdentifierNode)n.right).id + " of type " + right);
+		else error("Type mismatch: "+ lhsExp +"  type is not compatible with " +((IdentifierNode)n.right).id + " of type " + right);
          
         }
         else if (n.left instanceof NumNode)
