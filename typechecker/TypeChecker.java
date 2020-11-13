@@ -29,9 +29,9 @@ public class TypeChecker extends ASTVisitor
    
    public Type getType(IdentifierNode a){
         String x = a.id;
-	if(!(top.table.containsKey(((IdentifierNode)n.left).id)))
+	if(!(top.table.containsKey(x)
 	{
-		 error("Variable " + ((IdentifierNode)n.left).id +" has not been declared.");
+		 error("Variable " + x +" has not been declared.");
 	}
 	return top.table.get(a);
    }
