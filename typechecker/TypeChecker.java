@@ -191,8 +191,8 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(BooleanNode n)
     {
-    	    if(lhsExp == Type.Bool) {}
-	    else error("TypeMismatch");
+//     	    if(lhsExp == Type.Bool) {}
+// 	    else error("TypeMismatch");
     }
 
     public void visit(DoWhileNode n)
