@@ -8,8 +8,7 @@ import java.io.*;
 
 public class TypeChecker extends ASTVisitor
 {
-  public Parser parser = null;
-    public CompilationUnit cu = null;
+    public Parser parser = null;
     public Env top = null;
     public Type rhsExp = null;
     public boolean hasbeenInitialized = false;
@@ -17,8 +16,8 @@ public class TypeChecker extends ASTVisitor
     public TypeChecker(Parser parser)
     {
             this.parser = parser;
-            cu = parser.cu;
-            visit(cu);
+            
+            visit(this.parser.cu);
     }
     public TypeChecker()
     {
