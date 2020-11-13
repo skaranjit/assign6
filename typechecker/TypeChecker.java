@@ -25,41 +25,12 @@ public class TypeChecker extends ASTVisitor
             this.parser = new Parser();
             
             visit(this.parser.cu);
-   }
-   
-  
-
-    boolean isDigit(final String str) {
-        for (char c : str.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                return false;
-            }
-        }
-        return true;
     }
-
-    boolean isFloat(final String str) {
-        int numDec = 0;
-        for (char c : str.toCharArray()) {
-            if(c=='.')
-                numDec+=1;
-            else if (!Character.isDigit(c) && numDec==0 || numDec>1) {
-                return false;
-            }  
-        }
-        return true;
-    }
+      
     void error (String s) throws Error{
 	throw new Error ("near line " + this.parser.lexer.line + ": " + s);
     }
-    
 
-    public boolean checkOperator(String x)
-    {
-        if(x.equals("+") || x.equals("-") || x.equals("*") || x.equals("/") || x.equals("(") || x.equals(")"))
-        {return true;}
-        return false;
-    }
     public Type getType(IdentifierNode a){
         String x = a.id;
 	if(!(top.table.containsKey(x)))
@@ -67,9 +38,9 @@ public class TypeChecker extends ASTVisitor
 		 error("Variable " + x +" has not been declared.");
 	}
 	return top.table.get(x);
-   }
-   public void visit (CompilationUnit n)
-   {
+    }
+    public void visit (CompilationUnit n)
+    {
         top = new Env();
         top = n.symbolTable;
         visit(n.block);
@@ -245,10 +216,8 @@ public class TypeChecker extends ASTVisitor
     	rhsExp = lhsExp;
     	Type right;
 	right = getType(n);
-	if(lhsExp == right){
-		
-	} 
-	else if((right == Type.Int && lhsExp == Type.Float) || (right == Type.Float && lhsExp == Type.Int)){
+	System.out.println("Debug: Print type: " + right);
+	if((right == Type.Int && lhsExp == Type.Float) || (right == Type.Float && lhsExp == Type.Int)){
 		rhsExp = Type.Float;
 	}
 	else error("Type mismatch: "+ lhsExp +" type is not compatible with " +n.id + " of type " + right);
