@@ -134,7 +134,7 @@ public class TypeChecker extends ASTVisitor
         }
 	else {
             ((BinExprNode)n.right).accept(this);
-	    top.table.replace(n.left,rhsExp);
+	    top.table.replace(n.left.id,rhsExp);
         }
       
     }
