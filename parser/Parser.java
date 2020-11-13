@@ -99,13 +99,10 @@ public class Parser extends ASTVisitor
         n.type.accept(this);
         n.id = new IdentifierNode();
         n.id.accept(this);
-	System.out.println("Debug: Printing Identifier Node ID: " + n.id.id);
-	System.out.println("Debug: Printing Identifier Node Type: " + n.type.basic.toString());
         if(top.table.containsKey(n.id.id)){
 		    error("variable name has already been used.");
 		}
         top.put(n.id.id,n.type.basic);
-		System.out.println("....of type: " + n.type.basic.toString());
 	if(look.toString().equals(";")){
 		match(';');
 	}else error("Missed ';' ");
