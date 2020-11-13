@@ -105,6 +105,8 @@ public class TypeChecker extends ASTVisitor
         }
 	else {
             ((BinExprNode)n.right).accept(this);
+	    System.out.println("The left identifier: " +n.left.id+ "of type: "+ lhsExp);
+	    System.out.print(" has changed to type: " + rhsExp);
 	    top.table.replace(n.left.id,rhsExp);
         }
       
@@ -229,6 +231,7 @@ public class TypeChecker extends ASTVisitor
 	if(lhsExp == right){ rhsExp = lhsExp; }
 	else if((right == Type.Int && lhsExp == Type.Float) || (right == Type.Float && lhsExp == Type.Int)){
 		rhsExp = Type.Float;
+		
 	}
 	else error("Type mismatch: "+ lhsExp +" type is not compatible with " +n.id + " of type " + right);
     }
