@@ -26,32 +26,15 @@ public class TypeChecker extends ASTVisitor
             
             visit(this.parser.cu);
    }
-
-   public void getType(IdentifierNode a){
+   
+   public Type getType(IdentifierNode a){
         String x = a.id;
-        if(isDigit(x))
-        {
-            rhsExp =  Type.Int;
-            hasbeenInitialized = true; /////////////////////////////////////
-        }
-        else if(isFloat(x))
-        {
-            rhsExp =  Type.Float;
-            hasbeenInitialized = true;/////////////////////////////////////
-        }
-        else if(x.equals("true") || x.equals("false"))
-        {
-            rhsExp = Type.Bool;
-        }
-        else if(top.table.get(a.id) == null)
-        {
-            error(  a.id + " variable not declared!");
-        } 
-        else
-        {
-            rhsExp = top.table.get(x);
-        }
-    }
+	if(!(top.table.containsKey(((IdentifierNode)n.left).id)))
+	{
+		 error("Variable " + ((IdentifierNode)n.left).id +" has not been declared.");
+	}
+	return top.table.get(a);
+   }
 
     boolean isDigit(final String str) {
         for (char c : str.toCharArray()) {
@@ -133,27 +116,15 @@ public class TypeChecker extends ASTVisitor
     {
     	System.out.println("Debug: TypeChecker in Assignment Node");
     	Type left;
-        if(!(top.table.containsKey(n.left.id)))
-        {
-	    System.out.println(n.left.id);
-            error("Variable " + n.left.id +" has not been declared.");
-        }
-        left = top.table.get(n.left.id);
+        left = getType(n.left.id);
 	lhsExp = left;
-	System.out.println("Debug:" + left );
 	n.left.accept(this);
 	
 	if (n.right instanceof  IdentifierNode){
 		Type right;
-		if(!(top.table.containsKey(((IdentifierNode)n.right).id)))
-		{
-			 error("Variable " + ((IdentifierNode)n.right).id +" has not been declared.");
-		}
-		right = top.table.get(((IdentifierNode)n.right).id);
+		right = getType(((IdentifierNode)n.right).id);
 		if(left == right) ((IdentifierNode)n.right).accept(this);
 		else error("Type mismatch: "+ n.left.id+" of type " +left + " but " +((IdentifierNode)n.right).id + " of type " + right);
-		System.out.println( "Debug: Right: "+ ((IdentifierNode)n.right).id);
- 	       ((IdentifierNode)n.right).accept(this);
 	       
 	}
     	else if (n.right instanceof NumNode){
@@ -175,19 +146,15 @@ public class TypeChecker extends ASTVisitor
     	 if (n.left instanceof IdentifierNode)
         {
 		Type right;
-		if(!(top.table.containsKey(((IdentifierNode)n.right).id)))
-		{
-			 error("Variable " + ((IdentifierNode)n.right).id +" has not been declared.");
-		}
-		right = top.table.get(((IdentifierNode)n.right).id);
-		if(lhsExp == right) ((IdentifierNode)n.right).accept(this);
-		else error("Type mismatch: "+ n.left.id+" of type " +left + " but " +((IdentifierNode)n.right).id + " of type " + right);
+		right = getType(((IdentifierNode)n.right).id);
+		if(lhsExp == right) ((IdentifierNode)n.left).accept(this);
+		else error("Type mismatch: "+ lhs +"  type is not compatible with " +((IdentifierNode)n.right).id + " of type " + right);
          
         }
         else if (n.left instanceof NumNode)
         {
 	    	if(lhsExp == Type.Int) ((NumNode)n.left).accept(this);
-		else error("Type mismatch: " + n.left.id+" of type " +left + " but " +((NumNode)n.right).value + " of type int");
+		else error("Type mismatch: " + n.left.value+" of type " +left + " but " +((NumNode)n.right).value + " of type int");
         }
         else if (n.left instanceof RealNode)
         {
