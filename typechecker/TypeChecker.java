@@ -134,7 +134,7 @@ public class TypeChecker extends ASTVisitor
         }
 	else {
             ((BinExprNode)n.right).accept(this);
-	    top.replace(n.left,rhs);
+	    top.replace(n.left,rhsExp);
         }
       
     }
@@ -214,7 +214,7 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(BooleanNode n)
     {
-    	    if(lhsExp == Type.Bool) ((BooleanNode)n.left).accept(this);
+    	    if(lhsExp == Type.Bool) continue;
 	    else error("TypeMismatch");
     }
 
@@ -228,7 +228,7 @@ public class TypeChecker extends ASTVisitor
 	    if(lhsExp == Type.Float){
 			rhsExp = Type.Float;
 	    }
-	    else  error("Type mismatch: " +lhsExp + " of type " +left + " but " +n.value + " of type int");
+	    else  error("Type mismatch: " +lhsExp + " type is not compatible with " +n.value + " of type int");
     }
 
     public void visit(RealNode n)
@@ -246,9 +246,9 @@ public class TypeChecker extends ASTVisitor
     	Type right;
 	right = getType(n.id);
 	if(lhsExp == right){
-		
+		continue;
 	} 
-	elseif((right == Type.Int && lhsExp == Type.Float) || (right == Type.Float && lhsExp == Type.Int)){
+	else if((right == Type.Int && lhsExp == Type.Float) || (right == Type.Float && lhsExp == Type.Int)){
 		rhsExp = Type.Float;
 	}
 	else error("Type mismatch: "+ lhsExp +" type is not compatible with" +left + " but " +n.id + " of type " + right);
