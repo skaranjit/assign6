@@ -141,6 +141,7 @@ public class TypeChecker extends ASTVisitor
             error("Variable " + n.left.id +" has not been declared.");
         }
         left = top.table.get(n.left.id);
+	n.left.accept(this);
 	System.out.println("Debug:" + left );
 	if (n.right instanceof  IdentifierNode){
 		Type right;
