@@ -153,7 +153,7 @@ public class TypeChecker extends ASTVisitor
  	       ((IdentifierNode)n.right).accept(this);
 	}
     else if (n.right instanceof NumNode){
-    	Switch(left.tag){
+    	switch(left.tag){
 			case Tag.Int:
 				((NumNode)n.right).accept(this);
 				break;
@@ -164,7 +164,7 @@ public class TypeChecker extends ASTVisitor
 	}
     else if (n.right instanceof RealNode){
 		
-	  		Switch(left.tag){
+	  	switch(left.tag){
 			case Tag.Float:
 				((RealNode)n.right).accept(this);
 				break;
