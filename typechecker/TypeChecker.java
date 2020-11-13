@@ -217,6 +217,9 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(IdentifierNode n)
     {
+    	char c=n.id.toLowerCase().charAt(0);
+	if(!( c >= 'a' && c <= 'z') ) error("The variable name: " + n.id + " is not valid. Please check!");
+   
     	Type right;
 	right = getType(n);
 	//System.out.println("Debug: Print type: " + right);
