@@ -111,17 +111,14 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(TypeNode n)
     {
-       //  System.out.println("Debug: TypeChecker");
     }
 
     public void visit (ArrayTypeNode n)
     {
-      //   System.out.println("Debug: TypeChecker");
     }
 
     public void visit (Statements n)
     {
-       //System.out.println("Debug: TypeChecker");
        if (n.stmts != null){
             n.stmt.accept(this);
             n.stmts.accept(this);
@@ -173,76 +170,50 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(BinExprNode n)
     {
-	 System.out.println("Debug: TypeChecker");
     }
 
-    int getPrecedence(int op)
-    {
-        switch (op)
-        {
-            case '*': case '/': case '%':  return 12; // multiplicative
-            case '+': case '-':            return 11; // additive
-            case '<': case '>':
-            case Tag.LE: case Tag.GE:      return 9;  // relational
-            case Tag.EQ: case Tag.NE:      return 8;  // equality
-            case Tag.OR:                   return 3;
-            case Tag.AND:                  return 4;
-
-            default:
-                return -1;
-        }
-    }
+    
 
    
 
     public void visit(BreakNode n)
     {
-         System.out.println("Debug: TypeChecker");
     }
 
     public void visit(ConditionalNode n)
     {
        
-        System.out.println("Debug: TypeChecker");
     }
 
     public void visit(WhileNode n)
     {
-      System.out.println("Debug: TypeChecker");
     }
 
     public void visit(BooleanNode n)
     {
-         System.out.println("Debug: TypeChecker");
     }
 
     public void visit(DoWhileNode n)
     {
-        System.out.println("Debug: TypeChecker");
     }
 
     public void visit(NumNode n)
     {
-	 System.out.println("Debug: TypeChecker");
     }
 
     public void visit(RealNode n)
     {
-       System.out.println("Debug: TypeChecker");
     }
 
     public void visit(IdentifierNode n)
     {
-      System.out.println("Debug: TypeChecker");
     }
 
     public void visit (ArrayIDNode n)
     {
-        System.out.println("Debug: TypeChecker");
     }
 
     public void visit(ParenNode n)
     {
-     System.out.println("Debug: TypeChecker");
     }
 }
