@@ -141,8 +141,9 @@ public class TypeChecker extends ASTVisitor
             error("Variable " + n.left.id +" has not been declared.");
         }
         left = top.table.get(n.left.id);
-	n.left.accept(this);
 	System.out.println("Debug:" + left );
+	n.left.accept(this);
+	
 	if (n.right instanceof  IdentifierNode){
 		Type right;
 		if(!(top.table.containsKey(((IdentifierNode)n.right).id)))
@@ -150,9 +151,9 @@ public class TypeChecker extends ASTVisitor
 			 error("Variable " + ((IdentifierNode)n.right).id +" has not been declared.");
 		}
 		right = top.table.get(((IdentifierNode)n.right).id);
-		
+		System.out.println( "Debug: Right: "+ ((IdentifierNode)n.right).id);
  	       ((IdentifierNode)n.right).accept(this);
-	       System.out.println( "Debug: Right: "+ ((IdentifierNode)n.right).id);
+	       
 	}
     	else if (n.right instanceof NumNode){
     		if(left == Type.Int) ((NumNode)n.right).accept(this);
