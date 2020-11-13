@@ -22,8 +22,8 @@ public class TypeChecker extends ASTVisitor
     public TypeChecker()
     {
             this.parser = new Parser();
-            cu = this.parser.cu;
-            visit(cu);
+            
+            visit(this.parser.cu);
    }
 
    public void getType(IdentifierNode a){
