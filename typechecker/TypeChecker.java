@@ -49,7 +49,7 @@ public class TypeChecker extends ASTVisitor
         }
         return true;
     }
-    void error (String s){
+    void error (String s) throws Error{
 	throw new Error ("near line " + this.parser.lexer.line + ": " + s);
     }
     
