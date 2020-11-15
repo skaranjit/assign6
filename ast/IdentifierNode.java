@@ -3,11 +3,12 @@ package assign6.ast;
 import assign6.visitor.*;
 import assign6.lexer.*;
 
-public class IdentifierNode extends Node
+public class IdentifierNode extends ExprNode
 {
     public String id;
     public ArrayIDNode array;
     public Word w;
+
 
     public IdentifierNode()
     {
