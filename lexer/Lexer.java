@@ -44,7 +44,7 @@ public class Lexer
     {
         try
         {
-            in = new FileInputStream("src\\assign6\\input.txt");
+            in = new FileInputStream("input.txt");
             bin = new BufferedInputStream(in);
         }
         catch (IOException e)
