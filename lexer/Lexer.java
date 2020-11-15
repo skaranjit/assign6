@@ -24,6 +24,9 @@ public class Lexer
         reserve(Word.True);
         reserve(Word.False);
 
+        // ** new code
+        reserve(Word.eof);
+
         reserve(Type.Int);
         reserve(Type.Char);
         reserve(Type.Bool);
@@ -41,7 +44,7 @@ public class Lexer
     {
         try
         {
-            in = new FileInputStream("input.txt");
+            in = new FileInputStream("src\\assign6\\input.txt");
             bin = new BufferedInputStream(in);
         }
         catch (IOException e)
@@ -172,6 +175,13 @@ public class Lexer
             words.put(s, w);
 
             return w;
+        }
+
+        // ** new code **
+        if ((int)peek == 65535){
+            System.out.println("@@@@@@@@@ EOF reached...");
+
+            return Word.eof;
         }
 
         Token t = new Token(peek);
