@@ -10,8 +10,13 @@ public class Parser extends ASTVisitor
     public CompilationUnit cu = null;
     public Lexer lexer = null ;
     public Token look = null;
+    public int level;
+    String indent = "...";
+
+
+
     public Env top = null;
-    
+
     public Parser (Lexer lexer)
     {
         this.lexer = lexer;
@@ -25,6 +30,7 @@ public class Parser extends ASTVisitor
         cu = new CompilationUnit();
         move();
         visit(cu);
+        level =0;
     }
 
     void move()
@@ -39,46 +45,63 @@ public class Parser extends ASTVisitor
         }
     }
 
-    void error(String s)
-    {
-        throw new Error ("near line " + lexer.line + ": " + s);
+
+    void error(String s){
+        println("Line " + lexer.line + ": " + s);
+        exit(1);
     }
 
-    void match(int t)
-    {
-        try
-        {
-            if (look.tag == t)
-            {
+
+    void match(int t){
+        try{
+            if (look.tag == t) {
+                println("matched: "+look.toString());
                 move();
+
             }
+            else if (look.tag == Tag.EOF)
+                error("Syntax error: \";\" or \"}\" expected");
             else
-                error("Syntax error");
+                error("Syntax error: \"" + (char)t + "\" expected");
         }
-        catch(Error e)
-        {
+        catch (Error e){
 
         }
+    }
+
+
+    void print(String s){
+        System.out.print(s);
+    }
+
+
+    void println(String s){
+        System.out.println(s);
+    }
+
+
+    void exit(int n){
+        System.exit(n);
     }
 
     public void visit (CompilationUnit n)
     {
-        Env savedEnv = top;
-	top = new Env(top);
         n.block = new BlockStatementNode();
         n.block.accept(this);
-	n.symbolTable = top;
-        top = savedEnv;
     }
+
 
     public void visit (BlockStatementNode n)
     {
         match('{');
+        n.sTable = top; // new code
+        top = new Env(top); // new code
         n.decls = new Declarations();
         n.decls.accept(this);
         n.stmts = new Statements();
         n.stmts.accept(this);
         match('}');
+        top = n.sTable; // new code
     }
 
     public void visit(Declarations n)
@@ -90,23 +113,24 @@ public class Parser extends ASTVisitor
             n.decls = new Declarations();
             n.decls.accept(this);
         }
-	
     }
+
 
     public void visit(DeclarationNode n)
     {
         n.type = new TypeNode();
         n.type.accept(this);
         n.id = new IdentifierNode();
+        n.id.type = n.type.basic; // new code
         n.id.accept(this);
-        if(top.table.containsKey(n.id.id)){
-		    error("variable name has already been used.");
-		}
-        top.put(n.id.id,n.type.basic);
-	if(look.toString().equals(";")){
-		match(';');
-	}else error("Missed ';' ");
+        top.put(n.id.w, n.id); // new code
+        IdentifierNode tmp = (IdentifierNode)top.get(n.id.w); // new code
+        println("&&&&&& tmp.type: " + tmp.type); // new code
+        println("&&&&&& tmp.w: " + tmp.w); // new code
+
+        match(';');
     }
+
 
     public void visit(TypeNode n)
     {
@@ -114,41 +138,62 @@ public class Parser extends ASTVisitor
             n.basic = Type.Int;
         else if (look.toString().equals("float"))
             n.basic = Type.Float;
-	else if(look.toString().equals("char"))
-		n.basic = Type.Char;
-	else if(look.toString().equals("String"))
-		n.basic = Type.String;
-	else if(look.toString().equals("bool"))
-		n.basic = Type.Bool;
-	else
-		error("Invalid Declaration!");
         match(Tag.BASIC);
-        if (look.toString().equals("["))
+        if (look.tag == '[')
         {
             n.array = new ArrayTypeNode();
-	    n.array.ofType = n.basic;
             n.array.accept(this);
-	    //n.basic = new Array(n.array.size,n.array.ofType);
         }
     }
+
 
     public void visit (ArrayTypeNode n)
     {
         match('[');
-        n.size = ((Num)look).value;
-	
-        match(Tag.NUM);
+        ExprNode rhs_assign = null;
+
+        if (look.tag == Tag.ID)
+        {
+            rhs_assign = new IdentifierNode();
+            ((IdentifierNode)rhs_assign).accept(this);
+        }
+        else if (look.tag == Tag.NUM)
+        {
+            rhs_assign = new NumNode();
+            ((NumNode)rhs_assign).accept(this);
+        }
+        else if (look.tag == Tag.REAL)
+        {
+            rhs_assign = new RealNode();
+            ((RealNode)rhs_assign).accept(this);
+        }
+        else if (look.tag == Tag.TRUE || look.tag == Tag.FALSE)
+        {
+            rhs_assign = new BooleanNode();
+            ((BooleanNode)rhs_assign).accept(this);
+        }
+        else if (look.tag == '(')
+        {
+            rhs_assign = new ParenNode();
+            ((ParenNode)rhs_assign).accept(this);
+        }
+        else {
+            n.size = (BinExprNode) parseBinExprNode(rhs_assign, 0);
+            n.size.type = Type.Int;
+        }
+        //match(Tag.NUM);
         match(']');
-        if (look.toString().equals("["))
+        if (look.tag == '[')
         {
             n.type = new ArrayTypeNode();
             n.type.accept(this);
         }
     }
 
+
     public void visit (Statements n)
     {
-        if (!look.toString().equals("}"))
+        if (look.tag != '}' && look.tag != Tag.EOF) // new line of code
         {
             switch (look.tag)
             {
@@ -192,48 +237,76 @@ public class Parser extends ASTVisitor
         }
     }
 
+
     public void visit(AssignmentNode n)
     {
         n.left = new IdentifierNode();
         n.left.accept(this);
-	if(look.toString().equals("=")) match('=');
-        else error("Invalid Declarations");
-        Node rhs_assign = null;
+
+        if (top.get(n.left.w)==null){
+            error("Variable Must be Declared");
+        }else {
+            n.left.type = top.get(n.left.w).type;
+        }
+
+        IdentifierNode id = (IdentifierNode)top.get(((IdentifierNode)n.left).w); // new code
+        println("In Parser, AssignmentNode's left type: " + id.type); // new code
+
+        //((IdentifierNode)n.left).type = id.type; // new code
+
+        //if (look.tag == '['){ // new code
+        //    n.left = parseArrayAccessNode((IdentifierNode)n.left); // new code
+        //} // new code
+
+        match('=');
+        ExprNode rhs_assign = null;
         if (look.tag == Tag.ID)
         {
             rhs_assign = new IdentifierNode();
             ((IdentifierNode)rhs_assign).accept(this);
+            println(top.get(((IdentifierNode)rhs_assign).w).type.toString());
+            rhs_assign.type = top.get(((IdentifierNode)rhs_assign).w).type;
+            if (top.get(((IdentifierNode)rhs_assign).w)==null){
+                error("Variable Must be Declared");
+            }else {
+                n.right = rhs_assign;
+                n.right.type = rhs_assign.type;
+            }
         }
         else if (look.tag == Tag.NUM)
         {
             rhs_assign = new NumNode();
             ((NumNode)rhs_assign).accept(this);
+            n.right.type = Type.Int;
         }
         else if (look.tag == Tag.REAL)
         {
             rhs_assign = new RealNode();
             ((RealNode)rhs_assign).accept(this);
+            n.right.type = Type.Float;
         }
         else if (look.tag == Tag.TRUE || look.tag == Tag.FALSE)
         {
             rhs_assign = new BooleanNode();
             ((BooleanNode)rhs_assign).accept(this);
+            n.right.type = Type.Bool;
         }
         else if (look.tag == '(')
         {
             rhs_assign = new ParenNode();
             ((ParenNode)rhs_assign).accept(this);
+            n.right.type = ((ParenNode)rhs_assign).type;
         }
         if (look.tag == ';')
         {
             n.right = rhs_assign;
         }
-        else
+        else {
             n.right = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
-      if(look.toString().equals(";")){
-		match(';');
-	}else error("Missed ';' ");
+        }
+
+        match(';');
     }
 
     public void visit(BinExprNode n)
@@ -258,14 +331,14 @@ public class Parser extends ASTVisitor
         }
     }
 
-    Node parseBinExprNode(Node lhs, int precedence)
+    ExprNode parseBinExprNode(ExprNode lhs, int precedence)
     {
         while (getPrecedence(look.tag) >= precedence)
         {
             Token token_op = look;
             int op = getPrecedence(look.tag);
             move();
-            Node rhs = null;
+            ExprNode rhs = null;
             if (look.tag == Tag.ID)
             {
                 rhs = new IdentifierNode();
@@ -296,6 +369,7 @@ public class Parser extends ASTVisitor
                 rhs = parseBinExprNode(rhs, getPrecedence(look.tag));
             }
             lhs = new BinExprNode(token_op, lhs, rhs);
+            lhs.type = rhs.type;
         }
         return lhs;
     }
@@ -303,16 +377,14 @@ public class Parser extends ASTVisitor
     public void visit(BreakNode n)
     {
         match(Tag.BREAK);
-        if(look.toString().equals(";")){
-		match(';');
-	}else error("Missed ';' ");
+        match(';');
     }
 
     public void visit(ConditionalNode n)
     {
         match(Tag.IF);
         match('(');
-        Node rhs_assign = null;
+        ExprNode rhs_assign = null;
 
         if (look.tag == Tag.ID)
         {
@@ -346,9 +418,7 @@ public class Parser extends ASTVisitor
         else
             n.condition = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
-        if(look.toString().equals(")")){
-		match(')');
-	}else error("Missed ')' ");
+        match(')');
         switch (look.tag)
         {
             case Tag.ID:
@@ -414,7 +484,7 @@ public class Parser extends ASTVisitor
     {
         match(Tag.WHILE);
         match('(');
-        Node rhs_assign = null;
+        ExprNode rhs_assign = null;
         if (look.tag == Tag.ID)
         {
             rhs_assign = new IdentifierNode();
@@ -447,9 +517,7 @@ public class Parser extends ASTVisitor
         else
             n.condition = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
-       if(look.toString().equals(")")){
-		match(')');
-	}else error("Missed ')' ");
+        match(')');
         n.stmt = new StatementNode();
         n.stmt.accept(this);
     }
@@ -466,6 +534,7 @@ public class Parser extends ASTVisitor
             n.bool =Word.False;
             match(Tag.FALSE);
         }
+        n.type = Type.Bool;
     }
 
     public void visit(DoWhileNode n)
@@ -500,7 +569,7 @@ public class Parser extends ASTVisitor
         }
         match(Tag.WHILE);
         match('(');
-        Node rhs_assign = null;
+        ExprNode rhs_assign = null;
         if (look.tag == Tag.ID)
         {
             rhs_assign = new IdentifierNode();
@@ -530,43 +599,57 @@ public class Parser extends ASTVisitor
             n.condition = rhs_assign;
         }
         else
-            n.condition = (BinExprNode) parseBinExprNode(rhs_assign, 0);
+            n.condition = (ExprNode) parseBinExprNode(rhs_assign, 0);
 
-        if(look.toString().equals(")")){
-		match(')');
-	}else error("Missed ')' ");
-        if(look.toString().equals(";")){
-		match(';');
-	}else error("Missed ';' ");
+        match(')');
+        match(';');
     }
+
 
     public void visit(NumNode n)
     {
         n.value = ((Num)look).value;
+
+        if (look.tag != Tag.NUM) // new code
+            error("Syntax error: Integer number needed, instead of " + n.value); // new code
+
         match(Tag.NUM);
+        n.type = Type.Int;
+        n.printNode(); // new code
     }
+
 
     public void visit(RealNode n)
     {
         n.value = ((Real)look).value;
+
+        if (look.tag != Tag.REAL) // new code
+            error("Syntax error: Real number needed, instead of " + n.value); // new code
+
         match(Tag.REAL);
+        n.type = Type.Float;
+        n.printNode(); // new code
     }
+
 
     public void visit(IdentifierNode n)
     {
         n.id = look.toString();
+        n.w = (Word)look; // new code
+
+        println("***** n.type: "+ n.type); // new code
+
+        if (look.tag != Tag.ID) // new code
+            error("Syntax error: Identifier or variable needed, instead of " + n.id); // new code
+
         match(Tag.ID);
-        if (look.toString().equals("["))
-        {
-            n.array = new ArrayIDNode();
-            ((ArrayIDNode)(n.array)).accept(this);
-        }
+        n.printNode(); // new code
     }
 
     public void visit (ArrayIDNode n)
     {
         match('[');
-        Node rhs_assign = null;
+        ExprNode rhs_assign = null;
         if (look.tag == Tag.ID)
         {
             rhs_assign = new IdentifierNode();
@@ -575,16 +658,19 @@ public class Parser extends ASTVisitor
         else if (look.tag == Tag.NUM)
         {
             rhs_assign = new NumNode();
+            rhs_assign.type = Type.Int;
             ((NumNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.REAL)
         {
             rhs_assign = new RealNode();
+            rhs_assign.type = Type.Float;
             ((RealNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.TRUE || look.tag == Tag.FALSE)
         {
             rhs_assign = new BooleanNode();
+            rhs_assign.type = Type.Bool;
             ((BooleanNode)rhs_assign).accept(this);
         } else if (look.tag == '(') {
             rhs_assign = new ParenNode();
@@ -598,9 +684,7 @@ public class Parser extends ASTVisitor
         else
             n.node = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
-      if(look.toString().equals("]")){
-		match(']');
-	}else error("Missed ']' ");
+        match(']');
         if (look.toString().equals("["))
         {
             n.array = new ArrayIDNode();
@@ -612,7 +696,7 @@ public class Parser extends ASTVisitor
     {
         match('(');
 
-        Node rhs_assign = null;
+        ExprNode rhs_assign = null;
         if (look.tag == Tag.ID)
         {
             rhs_assign = new IdentifierNode();
@@ -644,8 +728,20 @@ public class Parser extends ASTVisitor
         else
             n.node = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
-        if(look.toString().equals(")")){
-		match(')');
-	}else error("Missed ')' ");
+        match(')');
+        n.type = n.node.type;
     }
+
+    Node parseArrayAccessNode(IdentifierNode id){
+        for (int i = 0; i < level; i++) System.out.print(indent);
+        System.out.println("parseArrayAccessNode");
+
+        ArrayIDNode index = new ArrayIDNode();
+        level++;
+        index.accept(this);
+        level--;
+
+        return new ArrayIDNode(id, index);
+    }
+
 }
