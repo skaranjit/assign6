@@ -15,6 +15,9 @@ public class Word extends Token
     public static final Word minus = new Word("minus", Tag.MINUS);
     public static final Word temp  = new Word("t", Tag.TEMP);
 
+    // ** new code
+    public static final Word eof   = new Word("eof", Tag.EOF);
+
     public Word (String s, int tag)
     {
         super(tag) ;
