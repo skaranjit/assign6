@@ -2,22 +2,24 @@ package assign6.unparser;
 
 import assign6.ast.*;
 import assign6.parser.*;
+import assign6.typechecker.TypeChecker;
 import assign6.visitor.*;
 import java.io.*;
-import assign6.typechecker.*;
+
 
 
 public class Unparser extends ASTVisitor
 {
+
     public File tempFile;
     public FileWriter tempFileWriter;
-    public TypeChecker parser;
+    public TypeChecker typeCheck;
 
-    public Unparser(TypeChecker parser)
+    public Unparser(TypeChecker typeChecker)
     {
         try
         {
-            tempFile = new File("output.txt");
+            tempFile = new File("src\\assign6\\output.txt");
             tempFileWriter = new FileWriter(tempFile);
             System.out.println("\n** Output.txt created successfully! ** ");
         }
@@ -26,8 +28,8 @@ public class Unparser extends ASTVisitor
 
         }
 
-        this.parser = parser;
-        visit(this.parser.cu);
+        this.typeCheck = typeChecker;
+        visit(this.typeCheck.cu);
 
         try
         {
