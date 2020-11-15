@@ -552,7 +552,7 @@ public class Parser extends ASTVisitor
                 break;
             case Tag.WHILE:
                 n.stmt = new WhileNode();
-                (n.stmt).accept(this);
+                ((WhileNode)n.stmt).accept(this);
                 break;
             case Tag.DO:
                 n.stmt = new DoWhileNode();
