@@ -1,4 +1,4 @@
-package assign6.lexer;
+package assign5.lexer;
 
 import java.io.* ;
 import java.util.* ;
