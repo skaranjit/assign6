@@ -3,7 +3,7 @@ package assign6.ast;
 import assign6.lexer.Word;
 import assign6.visitor.ASTVisitor;
 
-public class BooleanNode extends Node
+public class BooleanNode extends ExprNode
 {
     public Word bool;
 
