@@ -1,11 +1,14 @@
 {
    int i ;
    int j ;
-   float v ;
+   int v ;
    float x ;
-   [100] float[100] a ;
-   int i ;
-   ch = u;
+   float[100] a ;
+   int test ;
+   char c ;
+   test = 1;
+   a = i;
+   v = 20.98;
    while (true){
       do
          i = i + 1;
@@ -19,4 +22,5 @@
       a[i] = a[j];
       a[j] = x;
    }
+   a[1] = test;
 }

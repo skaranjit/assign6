@@ -4,16 +4,16 @@ import assign6.ast.*;
 import assign6.parser.*;
 import assign6.visitor.*;
 import java.io.*;
-
+import assign6.typechecker.*;
 
 
 public class Unparser extends ASTVisitor
 {
     public File tempFile;
     public FileWriter tempFileWriter;
-    public Parser parser;
+    public TypeChecker parser;
 
-    public Unparser(Parser parser)
+    public Unparser(TypeChecker parser)
     {
         try
         {

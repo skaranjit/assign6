@@ -1,5 +1,6 @@
 package assign6;
 
+
 import assign6.ast.*;
 import assign6.lexer.* ;
 import assign6.parser.* ;
@@ -12,8 +13,7 @@ public class Main {
         Lexer lexer = new Lexer();
         Parser parser = new Parser(lexer);
         TypeChecker typeCheck = new TypeChecker(parser);
-        Unparser unparser = new Unparser(parser);
-        
+        Unparser unparser = new Unparser(typeCheck);
+
     }
 }
-
