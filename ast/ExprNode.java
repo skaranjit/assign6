@@ -1,10 +1,12 @@
 package assign6.ast;
 
 import assign6.visitor.*;
-
+import assign6.lexer.*;
 
 public class ExprNode extends Node
 {
+    public Type type = null;
+
     public ExprNode()
     {
 
@@ -14,5 +16,4 @@ public class ExprNode extends Node
     {
         v.visit(this);
     }
-
 }
