@@ -5,15 +5,14 @@ import assign6.lexer.*;
 public class ArrayTypeNode extends TypeNode
 {
     public TypeNode type;
-    public int size = 1;
-    public Type ofType;
+    public BinExprNode size;
 
     public ArrayTypeNode()
     {
 
     }
 
-    public ArrayTypeNode(int size, TypeNode type)
+    public ArrayTypeNode(BinExprNode size, TypeNode type)
     {
         this.size = size;
         this.type = type;
