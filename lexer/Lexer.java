@@ -6,7 +6,7 @@ import java.util.* ;
 
 public class Lexer
 {
-    public int line = 1;
+    public int line = 0;
     private char peek = ' ';
 
     private BufferedInputStream bin;
@@ -41,7 +41,7 @@ public class Lexer
     {
         try
         {
-            in = new FileInputStream("input.txt");
+            in = new FileInputStream("assign6/input.txt");
             bin = new BufferedInputStream(in);
         }
         catch (IOException e)
@@ -73,9 +73,12 @@ public class Lexer
             {
                 continue ;
             }
-            else if (peek == '\n' || peek == '\r')
+            else if (peek == '\n')
             {
                 line = line + 1;
+            }
+            else if(peek == '\r'){
+                continue;
             }
             else
                 break;
