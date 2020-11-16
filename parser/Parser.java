@@ -738,8 +738,9 @@ public class Parser extends ASTVisitor
             n.node = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
         match(')');
-	System.out.println("Mytype: "+ n.type);
+	
        n.type = n.node.type;
+       System.out.println("Mytype: "+ n.type);
     }
 
     Node parseArrayAccessNode(IdentifierNode id){
