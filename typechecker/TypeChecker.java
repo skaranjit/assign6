@@ -132,7 +132,7 @@ public class TypeChecker extends ASTVisitor
     public void visit(ConditionalNode n)
     {
         System.out.println("IfStatement/ConditionalNode");
-        if (n.condition.type != Type.Bool){
+         if (n.condition.type != Type.Bool){
             error("Conditional Must be Boolean");
         }
         n.condition.accept(this);
@@ -160,10 +160,11 @@ public class TypeChecker extends ASTVisitor
     {
         isLoop = true;
         System.out.println("visiting DoWhileNode");
-        if (n.condition.type != Type.Bool){
+       
+        n.stmt.accept(this);
+         if (n.condition.type != Type.Bool){
             error("Conditional Must be Boolean");
         }
-        n.stmt.accept(this);
         n.condition.accept(this);
         isLoop = false;
     }
