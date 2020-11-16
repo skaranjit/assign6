@@ -10,7 +10,8 @@ public class TypeChecker extends ASTVisitor
 {
     public Parser parser = null;
     public CompilationUnit cu = null;
-    public boolean isLoop = false;
+    public boolean whileLoop = false;
+    public boolean doLoop = false;
 
     int level = 0;
     String indent = "...";
@@ -146,23 +147,23 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(WhileNode n)
     {
-        isLoop = true;
+        whileLoop = true;
         System.out.println("visiting WhileNode");
        
         n.condition.accept(this);
         n.stmt.accept(this);
-        isLoop = false;
+        //whileLoop = false;
     }
 
     public void visit(DoWhileNode n)
     {
-        isLoop = true;
+        doLoop = true;
         System.out.println("visiting DoWhileNode");
        
         n.stmt.accept(this);
          
         n.condition.accept(this);
-        isLoop = false;
+        doLoop = false;
     }
 
     public void visit (ArrayIDNode n)
@@ -195,7 +196,7 @@ public class TypeChecker extends ASTVisitor
     public void visit(BreakNode n)
     {
         System.out.println("visiting BreakNode");
-        if (!isLoop){
+        if (!whileLoop || !doLoop){
             error("Break called outside of loop");
         }
     }
