@@ -638,7 +638,7 @@ public class Parser extends ASTVisitor
         n.id = look.toString();
         n.w = (Word)look; // new code
 
-        println("***** n.type: "+ n.type.basic); // new code
+      //  println("***** n.type: "+ n.type.basic); // new code
 
         if (look.tag != Tag.ID) // new code
             error("Syntax error: Identifier or variable needed, instead of " + n.id); // new code
