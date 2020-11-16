@@ -643,6 +643,10 @@ public class Parser extends ASTVisitor
             error("Syntax error: Identifier or variable needed, instead of " + n.id); // new code
 
         match(Tag.ID);
+        if(look.tag = '['){
+            n.array = new ArrayIDNode();
+            n.array.accept(this);
+        }
         n.printNode(); // new code
     }
 
