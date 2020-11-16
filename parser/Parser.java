@@ -295,7 +295,7 @@ public class Parser extends ASTVisitor
         {
             rhs_assign = new ParenNode();
             ((ParenNode)rhs_assign).accept(this);
-            n.right.type = ((ParenNode)rhs_assign).type;
+            //n.right.type = ((ParenNode)rhs_assign).type;
         }
         if (look.tag == ';')
         {
