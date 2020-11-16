@@ -185,7 +185,7 @@ public class TypeChecker extends ASTVisitor
     public void visit(ArrayTypeNode n)
     {
         System.out.println("ArrayDimsNode");
-        n.size.accept(this);
+        //n.size.accept(this);
         if (n.size.type != Type.Int){
             error("Index of Array must be an Integer");
         }
