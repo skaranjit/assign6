@@ -230,8 +230,8 @@ public class Parser extends ASTVisitor
                 case '{':
                     n.stmt = new BlockStatementNode();
                     (n.stmt).accept(this);
-                    n.stmts = new Statements();
-                    n.stmts.accept(this);
+//                     n.stmts = new Statements();
+//                     n.stmts.accept(this);
                     break;
             }
         }
