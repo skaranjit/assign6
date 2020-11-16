@@ -5,8 +5,8 @@ import assign6.lexer.*;
 
 public class ExprNode extends Node
 {
-    public Type type = null;
-
+    //public Type type = null;
+    public TypeNode type = null;
     public ExprNode()
     {
 

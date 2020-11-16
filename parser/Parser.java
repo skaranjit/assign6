@@ -299,6 +299,7 @@ public class Parser extends ASTVisitor
         }
         if (look.tag == ';')
         {
+	    System.out.println("Debug: " + n.right);
             n.right = rhs_assign;
         }
         else {
@@ -637,7 +638,7 @@ public class Parser extends ASTVisitor
         n.id = look.toString();
         n.w = (Word)look; // new code
 
-        println("***** n.type: "+ n.type); // new code
+        println("***** n.type: "+ n.type.basic); // new code
 
         if (look.tag != Tag.ID) // new code
             error("Syntax error: Identifier or variable needed, instead of " + n.id); // new code
@@ -733,7 +734,8 @@ public class Parser extends ASTVisitor
             n.node = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
         match(')');
-        n.type = n.node.type;
+//	System.out.println("Mytype: "+ n.type);
+  //      n.type = n.node.type;
     }
 
     Node parseArrayAccessNode(IdentifierNode id){
