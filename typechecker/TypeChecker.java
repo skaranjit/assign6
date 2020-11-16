@@ -152,7 +152,7 @@ public class TypeChecker extends ASTVisitor
        
         n.condition.accept(this);
         n.stmt.accept(this);
-        //whileLoop = false;
+        whileLoop = false;
     }
 
     public void visit(DoWhileNode n)
