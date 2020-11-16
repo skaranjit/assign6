@@ -121,7 +121,7 @@ public class Parser extends ASTVisitor
         n.type = new TypeNode();
         n.type.accept(this);
         n.id = new IdentifierNode();
-        n.id.type.basic = n.type.basic; // new code
+        n.id.type = n.type.basic; // new code
         n.id.accept(this);
         top.put(n.id.w, n.id); // new code
         IdentifierNode tmp = (IdentifierNode)top.get(n.id.w); // new code
@@ -277,25 +277,25 @@ public class Parser extends ASTVisitor
         {
             rhs_assign = new NumNode();
             ((NumNode)rhs_assign).accept(this);
-            n.right.type.basic = Type.Int;
+            n.right.type = Type.Int;
         }
         else if (look.tag == Tag.REAL)
         {
             rhs_assign = new RealNode();
             ((RealNode)rhs_assign).accept(this);
-            n.right.type.basic = Type.Float;
+            n.right.type = Type.Float;
         }
         else if (look.tag == Tag.TRUE || look.tag == Tag.FALSE)
         {
             rhs_assign = new BooleanNode();
             ((BooleanNode)rhs_assign).accept(this);
-            n.right.type.basic = Type.Bool;
+            n.right.type = Type.Bool;
         }
         else if (look.tag == '(')
         {
             rhs_assign = new ParenNode();
             ((ParenNode)rhs_assign).accept(this);
-            n.right.type.basic = ((ParenNode)rhs_assign).type.basic;
+            n.right.type = ((ParenNode)rhs_assign).type;
         }
         if (look.tag == ';')
         {
@@ -535,7 +535,7 @@ public class Parser extends ASTVisitor
             n.bool =Word.False;
             match(Tag.FALSE);
         }
-        n.type.basic = Type.Bool;
+        n.type = Type.Bool;
     }
 
     public void visit(DoWhileNode n)
@@ -615,7 +615,7 @@ public class Parser extends ASTVisitor
             error("Syntax error: Integer number needed, instead of " + n.value); // new code
 
         match(Tag.NUM);
-        n.type.basic = Type.Int;
+        n.type = Type.Int;
         n.printNode(); // new code
     }
 
@@ -628,7 +628,7 @@ public class Parser extends ASTVisitor
             error("Syntax error: Real number needed, instead of " + n.value); // new code
 
         match(Tag.REAL);
-        n.type.basic = Type.Float;
+        n.type = Type.Float;
         n.printNode(); // new code
     }
 
@@ -663,19 +663,19 @@ public class Parser extends ASTVisitor
         else if (look.tag == Tag.NUM)
         {
             rhs_assign = new NumNode();
-            rhs_assign.type.basic = Type.Int;
+            rhs_assign.type = Type.Int;
             ((NumNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.REAL)
         {
             rhs_assign = new RealNode();
-            rhs_assign.type.basic = Type.Float;
+            rhs_assign.type = Type.Float;
             ((RealNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.TRUE || look.tag == Tag.FALSE)
         {
             rhs_assign = new BooleanNode();
-            rhs_assign.type.basic = Type.Bool;
+            rhs_assign.type = Type.Bool;
             ((BooleanNode)rhs_assign).accept(this);
         } else if (look.tag == '(') {
             rhs_assign = new ParenNode();
