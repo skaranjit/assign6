@@ -519,7 +519,6 @@ public class Parser extends ASTVisitor
             n.condition = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
         match(')');
-	match(';');
         n.stmt = new StatementNode();
         n.stmt.accept(this);
     }
