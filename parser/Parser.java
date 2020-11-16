@@ -295,7 +295,7 @@ public class Parser extends ASTVisitor
         {
             rhs_assign = new ParenNode();
             ((ParenNode)rhs_assign).accept(this);
-            n.right.type.basic = ((ParenNode)rhs_assign).type;
+            n.right.type.basic = ((ParenNode)rhs_assign).type.basic;
         }
         if (look.tag == ';')
         {
@@ -535,7 +535,7 @@ public class Parser extends ASTVisitor
             n.bool =Word.False;
             match(Tag.FALSE);
         }
-        n.type = Type.Bool;
+        n.type.basic = Type.Bool;
     }
 
     public void visit(DoWhileNode n)
@@ -615,7 +615,7 @@ public class Parser extends ASTVisitor
             error("Syntax error: Integer number needed, instead of " + n.value); // new code
 
         match(Tag.NUM);
-        n.type = Type.Int;
+        n.type.basic = Type.Int;
         n.printNode(); // new code
     }
 
@@ -628,7 +628,7 @@ public class Parser extends ASTVisitor
             error("Syntax error: Real number needed, instead of " + n.value); // new code
 
         match(Tag.REAL);
-        n.type = Type.Float;
+        n.type.basic = Type.Float;
         n.printNode(); // new code
     }
 
