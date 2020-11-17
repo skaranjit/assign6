@@ -6,7 +6,7 @@ import assign6.visitor.*;
 public class WhileNode extends StatementNode
 {
     public ExprNode condition;
-    public StatementNode stmt;
+    public Statements stmt;
 
     public WhileNode()
     {
