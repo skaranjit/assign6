@@ -179,7 +179,7 @@ public class Parser extends ASTVisitor
         }
         else {
             n.size = (BinExprNode) parseBinExprNode(rhs_assign, 0);
-            n.size.type = Type.Int;
+            ((BinExprNode)n.size).type = Type.Int;
         }
         //match(Tag.NUM);
         match(']');
@@ -197,12 +197,6 @@ public class Parser extends ASTVisitor
         {
             switch (look.tag)
             {
-	    	case Tag.BASIC:
-			n.decl = new DeclarationNode();
-            		n.decl.accept(this);
-			n.stmts = new Statements();
-			n.stmts.accept(this);
-			break;
                 case Tag.ID:
                     n.stmt = new AssignmentNode();
                     (n.stmt).accept(this);
@@ -236,8 +230,8 @@ public class Parser extends ASTVisitor
                 case '{':
                     n.stmt = new BlockStatementNode();
                     (n.stmt).accept(this);
-                     n.stmts = new Statements();
-                     n.stmts.accept(this);
+                    n.stmts = new Statements();
+                    n.stmts.accept(this);
                     break;
             }
         }
@@ -305,7 +299,7 @@ public class Parser extends ASTVisitor
         }
         if (look.tag == ';')
         {
-	    
+	    System.out.println("Debug: " + n.right);
             n.right = rhs_assign;
         }
         else {
@@ -338,92 +332,49 @@ public class Parser extends ASTVisitor
         }
     }
 
-//     ExprNode parseBinExprNode(ExprNode lhs, int precedence)
-//     {
-//         while (getPrecedence(look.tag) >= precedence)
-//         {
-//             Token token_op = look;
-//             int op = getPrecedence(look.tag);
-//             move();
-//             ExprNode rhs = null;
-//             if (look.tag == Tag.ID)
-//             {
-//                 rhs = new IdentifierNode();
-//                 ((IdentifierNode)rhs).accept(this);
-//             }
-//             else if (look.tag == Tag.NUM)
-//             {
-//                 rhs = new NumNode();
-//                 ((NumNode)rhs).accept(this);
-//             }
-//             else if (look.tag == Tag.REAL)
-//             {
-//                 rhs = new RealNode();
-//                 ((RealNode)rhs).accept(this);
-//             }
-//             else if (look.tag == Tag.TRUE || look.tag == Tag.FALSE)
-//             {
-//                 rhs = new BooleanNode();
-//                 ((BooleanNode)rhs).accept(this);
-//             }
-//             else if (look.tag == '(')
-//             {
-//                 rhs = new ParenNode();
-//                 ((ParenNode)rhs).accept(this);
-//             }
-//             while (getPrecedence(look.tag) > op)
-//             {
-//                 rhs = parseBinExprNode(rhs, getPrecedence(look.tag));
-//             }
-//             lhs = new BinExprNode(token_op, lhs, rhs);
-//             lhs.type = rhs.type;
-//         }
-//         return lhs;
-//     }
-Node parseBinExprNode(Node lhs, int precedence){
-        while(getPrecedence(look.tag)>= precedence){
-            Token token_op=look;
-            int op= getPrecedence(look.tag);
+    ExprNode parseBinExprNode(ExprNode lhs, int precedence)
+    {
+        while (getPrecedence(look.tag) >= precedence)
+        {
+            Token token_op = look;
+            int op = getPrecedence(look.tag);
             move();
-     //       for(int i=0; i<level;i++){ System.out.print(indent); }
-
-            Node rhs= null;
-            if(look.tag=='('){
-                rhs=new ParenNode();
-       //         level++;
-                ((ParenNode)rhs).accept(this);
-         //       level--;
-            }
-            else if(look.tag== Tag.ID){
-                rhs= new IdentifierNode();
-           //     level++;
+            ExprNode rhs = null;
+            if (look.tag == Tag.ID)
+            {
+                rhs = new IdentifierNode();
                 ((IdentifierNode)rhs).accept(this);
-             //   level--;
-                if(look.tag=='['){
-                    rhs=parseArrayAccessNode(((IdentifierNode)rhs));
-                }
-            }else if (look.tag==Tag.NUM){
-                rhs= new NumNode();
-               // level++;
+            }
+            else if (look.tag == Tag.NUM)
+            {
+                rhs = new NumNode();
                 ((NumNode)rhs).accept(this);
-                //level--;
-            }else if(look.tag==Tag.REAL){
-                rhs= new RealNode();
-                //level++;
+            }
+            else if (look.tag == Tag.REAL)
+            {
+                rhs = new RealNode();
                 ((RealNode)rhs).accept(this);
-            //    level--;
             }
-            //for(int i=0; i<level;i++){ System.out.print(indent); }
-            System.out.println(" operator"+look);
-
-            while(getPrecedence(look.tag)>op){
-                rhs= parseBinExprNode(rhs,getPrecedence(look.tag));
+            else if (look.tag == Tag.TRUE || look.tag == Tag.FALSE)
+            {
+                rhs = new BooleanNode();
+                ((BooleanNode)rhs).accept(this);
             }
-            lhs= new BinExprNode(token_op,lhs,rhs);
-
+            else if (look.tag == '(')
+            {
+                rhs = new ParenNode();
+                ((ParenNode)rhs).accept(this);
+            }
+            while (getPrecedence(look.tag) > op)
+            {
+                rhs = parseBinExprNode(rhs, getPrecedence(look.tag));
+            }
+            lhs = new BinExprNode(token_op, lhs, rhs);
+            lhs.type = rhs.type;
         }
         return lhs;
     }
+
     public void visit(BreakNode n)
     {
         match(Tag.BREAK);
@@ -590,7 +541,6 @@ Node parseBinExprNode(Node lhs, int precedence){
     public void visit(DoWhileNode n)
     {
         match(Tag.DO);
-	while(look.tag != Tag.WHILE){
         switch (look.tag)
         {
             case Tag.ID:
@@ -618,10 +568,9 @@ Node parseBinExprNode(Node lhs, int precedence){
                 (n.stmt).accept(this);
                 break;
         }
-	}
         match(Tag.WHILE);
         match('(');
-        Node rhs_assign = null;
+        ExprNode rhs_assign = null;
         if (look.tag == Tag.ID)
         {
             rhs_assign = new IdentifierNode();
@@ -688,12 +637,8 @@ Node parseBinExprNode(Node lhs, int precedence){
     {
         n.id = look.toString();
         n.w = (Word)look; // new code
-	if((IdentifierNode)top.get(n.w) != null){
-		n = (IdentifierNode)top.get((Word)look);
-	}
-	
 
-      	println("***** n.type: "+ n.type); // new code
+      //  println("***** n.type: "+ n.type.basic); // new code
 
         if (look.tag != Tag.ID) // new code
             error("Syntax error: Identifier or variable needed, instead of " + n.id); // new code
@@ -709,7 +654,7 @@ Node parseBinExprNode(Node lhs, int precedence){
     public void visit (ArrayIDNode n)
     {
         match('[');
-        Node rhs_assign = null;
+        ExprNode rhs_assign = null;
         if (look.tag == Tag.ID)
         {
             rhs_assign = new IdentifierNode();
@@ -756,42 +701,41 @@ Node parseBinExprNode(Node lhs, int precedence){
     {
         match('(');
 
-       
+        ExprNode rhs_assign = null;
         if (look.tag == Tag.ID)
         {
-            n.node = new IdentifierNode();
-	    System.out.println("Inside Parenthesis node");
-            ((IdentifierNode)n.node).accept(this);
-	    System.out.println("Type: " + ((IdentifierNode)n.node).type);
+            rhs_assign = new IdentifierNode();
+            ((IdentifierNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.NUM)
         {
-            n.node = new NumNode();
-            ((NumNode)n.node).accept(this);
+            rhs_assign = new NumNode();
+            ((NumNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.REAL)
         {
-            n.node = new RealNode();
-            ((RealNode)n.node).accept(this);
+            rhs_assign = new RealNode();
+            ((RealNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.TRUE || look.tag == Tag.FALSE)
         {
-            n.node = new BooleanNode();
-            ((BooleanNode)n.node).accept(this);
+            rhs_assign = new BooleanNode();
+            ((BooleanNode)rhs_assign).accept(this);
         } else if (look.tag == '(')
         {
-            n.node = new ParenNode();
-            ((ParenNode)n.node).accept(this);
+            rhs_assign = new ParenNode();
+            ((ParenNode)rhs_assign).accept(this);
         }
-        if (look.tag != ')')
+        if (look.tag == ')')
         {
-            n.node =  parseBinExprNode(n.node, 0);
-	}
+            n.node = rhs_assign;
+        }
+        else
+            n.node = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
         match(')');
-	
-	 //n.type = n.node.type;
-	 //System.out.println("Mytype: "+ n.type);
+//	System.out.println("Mytype: "+ n.type);
+  //      n.type = n.node.type;
     }
 
     Node parseArrayAccessNode(IdentifierNode id){
