@@ -231,7 +231,7 @@ public class TypeChecker extends ASTVisitor
             //rightType = ((BinExprNode)n.right).type;
         }
 
-
+	rightType = n.right.type;
         if(leftType == Type.Int)
             println("************* leftType is Type.Int");
         if(leftType != rightType)
