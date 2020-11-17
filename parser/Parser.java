@@ -645,7 +645,6 @@ public class Parser extends ASTVisitor
     {
         n.id = look.toString();
         n.w = (Word)look; // new code
-	println("***** n.type: "+ n.type);
 	if((IdentifierNode)top.get(n.w) != null){
 		n = (IdentifierNode)top.get((Word)look);
 	}
@@ -714,42 +713,44 @@ public class Parser extends ASTVisitor
     {
         match('(');
 
-       
+        ExprNode rhs_assign = null;
         if (look.tag == Tag.ID)
         {
-            n.node = new IdentifierNode();
+            rhs_assign = new IdentifierNode();
 	    System.out.println("Inside Parenthesis node");
-            ((IdentifierNode)n.node).accept(this);
-	    System.out.println("Type: " + ((ExprNode)n.node).type);
+            ((IdentifierNode)rhs_assign).accept(this);
+	    System.out.println("Type: " + ((IdentifierNode)rhs_assign).type);
         }
         else if (look.tag == Tag.NUM)
         {
-            n.node = new NumNode();
-            ((NumNode)n.node).accept(this);
+            rhs_assign = new NumNode();
+            ((NumNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.REAL)
         {
-            n.node = new RealNode();
-            ((RealNode)n.node).accept(this);
+            rhs_assign = new RealNode();
+            ((RealNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.TRUE || look.tag == Tag.FALSE)
         {
-            n.node = new BooleanNode();
-            ((BooleanNode)n.node).accept(this);
+            rhs_assign = new BooleanNode();
+            ((BooleanNode)rhs_assign).accept(this);
         } else if (look.tag == '(')
         {
-            n.node = new ParenNode();
-            ((ParenNode)n.node).accept(this);
+            rhs_assign = new ParenNode();
+            ((ParenNode)rhs_assign).accept(this);
         }
-        if (look.tag != ')')
+        if (look.tag == ')')
         {
-            n.node = (BinExprNode) parseBinExprNode(((ExprNode)n.node), 0);
-	}
+            n.node = rhs_assign;
+        }
+        else
+            n.node = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
         match(')');
 	
-	 //n.type = n.node.type;
-	 //System.out.println("Mytype: "+ n.type);
+	  n.type = rhs_assign.type;
+	  System.out.println("Mytype: "+ n.type);
     }
 
     Node parseArrayAccessNode(IdentifierNode id){
