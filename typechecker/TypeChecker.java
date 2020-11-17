@@ -16,7 +16,7 @@ public class TypeChecker extends ASTVisitor
     int level = 0;
     String indent = "...";
 
-//    public Env top = null;
+    public Env top = null;
 //    public Type lhsExp = null;
 //    public Type rhsExp = null;
 //    public boolean hasbeenInitialized = false;
@@ -85,6 +85,8 @@ public class TypeChecker extends ASTVisitor
     public void visit (BlockStatementNode n)
     {
         System.out.println("visiting Block");
+	top = new Env();
+	top = n.sTable;
         n.decls.accept(this);
         n.stmts.accept(this);
     }
@@ -316,6 +318,9 @@ public class TypeChecker extends ASTVisitor
     public void visit(IdentifierNode n)
     {
         System.out.println("visiting IdentifierNode");
+	if(top.get(n.w)){
+		println("Variable is already declared: " +n.w);
+	}
 // 	println("Type: " + n.type);
 //         if(n.type == null){
 // 		error("Syntax error: Variable " + n.id + " not declared. Cannot use undeclared variable.");
