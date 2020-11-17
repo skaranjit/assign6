@@ -4,7 +4,7 @@ import assign6.visitor.ASTVisitor;
 
 public class ParenNode extends ExprNode
 {
-    public ExprNode node;
+    public Node node;
 
     public ParenNode()
     {
