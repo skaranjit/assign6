@@ -719,7 +719,7 @@ public class Parser extends ASTVisitor
             n.node = new IdentifierNode();
 	    System.out.println("Inside Parenthesis node");
             ((IdentifierNode)n.node).accept(this);
-	    System.out.println("Type: " + ((IdentifierNode)rhs_assign).type);
+	    System.out.println("Type: " + ((IdentifierNode)n.node).type);
         }
         else if (look.tag == Tag.NUM)
         {
