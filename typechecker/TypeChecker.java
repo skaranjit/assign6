@@ -85,7 +85,7 @@ public class TypeChecker extends ASTVisitor
     public void visit (BlockStatementNode n)
     {
         System.out.println("visiting Block");
-	top = new Env();
+	top = new Env(top);
 	top = n.sTable;
         n.decls.accept(this);
         n.stmts.accept(this);
