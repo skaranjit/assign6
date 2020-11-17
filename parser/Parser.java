@@ -621,7 +621,7 @@ Node parseBinExprNode(Node lhs, int precedence){
 	}
         match(Tag.WHILE);
         match('(');
-        ExprNode rhs_assign = null;
+        Node rhs_assign = null;
         if (look.tag == Tag.ID)
         {
             rhs_assign = new IdentifierNode();
@@ -709,7 +709,7 @@ Node parseBinExprNode(Node lhs, int precedence){
     public void visit (ArrayIDNode n)
     {
         match('[');
-        ExprNode rhs_assign = null;
+        Node rhs_assign = null;
         if (look.tag == Tag.ID)
         {
             rhs_assign = new IdentifierNode();
