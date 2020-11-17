@@ -315,6 +315,10 @@ public class TypeChecker extends ASTVisitor
     public void visit(IdentifierNode n)
     {
         System.out.println("visiting IdentifierNode");
+        if(n.type == null){
+		error("Syntax error: Variable " + n.id + " not declared. Cannot use undeclared variable.");
+	}
+	
         if (n.array != null)
         {
             n.array.accept(this);
