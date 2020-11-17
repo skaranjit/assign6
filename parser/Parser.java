@@ -648,9 +648,6 @@ public class Parser extends ASTVisitor
 	if((IdentifierNode)top.get(n.w) != null){
 		n = (IdentifierNode)top.get((Word)look);
 	}
-	if(n.type == null){
-		error("Syntax error: Variable " + n.id + " not declared. Cannot use undeclared variable.");
-	}
 	
 
       	println("***** n.type: "+ n.type); // new code
