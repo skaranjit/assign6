@@ -6,14 +6,14 @@ import assign6.visitor.*;
 public class WhileNode extends StatementNode
 {
     public ExprNode condition;
-    public Statements stmt;
+    public AssignmentNode stmt;
 
     public WhileNode()
     {
 
     }
 
-    public WhileNode(ExprNode node, StatementNode stmt)
+    public WhileNode(ExprNode node, AssignmentNode stmt)
     {
         this.condition = node;
         this.stmt = stmt;
