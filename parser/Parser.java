@@ -750,8 +750,8 @@ public class Parser extends ASTVisitor
 
         match(')');
 	
-       n.type = n.node.type;
-       System.out.println("Mytype: "+ n.type);
+//        n.type = rhs_assign.type;
+//        System.out.println("Mytype: "+ n.type);
     }
 
     Node parseArrayAccessNode(IdentifierNode id){
