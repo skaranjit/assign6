@@ -212,9 +212,9 @@ public class TypeChecker extends ASTVisitor
         println("In TypeChecker, AssignmentNode's left type: "+leftType);
 
         Type rightType = null;
-        if(n.right instanceof IdentifierNode)
+        if(n.right instanceof IdentifierNode){
             ((IdentifierNode)n.right).accept(this);
-	    println("Debug: " + n.right.type);
+	    println("Debug: " + n.right.type);}
         else if (n.right instanceof NumNode)
         {
             ((NumNode)n.right).accept(this);
