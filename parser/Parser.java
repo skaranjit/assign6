@@ -742,7 +742,7 @@ public class Parser extends ASTVisitor
         }
         if (look.tag != ')')
         {
-            n.node = (BinExprNode) parseBinExprNode(n.node, 0);
+            n.node = (BinExprNode) parseBinExprNode(((ExprNode)n.node), 0);
 	}
 
         match(')');
