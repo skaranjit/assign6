@@ -214,6 +214,7 @@ public class TypeChecker extends ASTVisitor
         Type rightType = null;
         if(n.right instanceof IdentifierNode)
             ((IdentifierNode)n.right).accept(this);
+	    println("Debug: " + n.right.type);
         else if (n.right instanceof NumNode)
         {
             ((NumNode)n.right).accept(this);
