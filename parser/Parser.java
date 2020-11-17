@@ -541,7 +541,7 @@ public class Parser extends ASTVisitor
     public void visit(DoWhileNode n)
     {
         match(Tag.DO);
-	while(look.tag != Tag.While){
+	while(look.tag != Tag.WHILE){
         switch (look.tag)
         {
             case Tag.ID:
