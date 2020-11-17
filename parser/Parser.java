@@ -338,49 +338,92 @@ public class Parser extends ASTVisitor
         }
     }
 
-    ExprNode parseBinExprNode(ExprNode lhs, int precedence)
-    {
-        while (getPrecedence(look.tag) >= precedence)
-        {
-            Token token_op = look;
-            int op = getPrecedence(look.tag);
+//     ExprNode parseBinExprNode(ExprNode lhs, int precedence)
+//     {
+//         while (getPrecedence(look.tag) >= precedence)
+//         {
+//             Token token_op = look;
+//             int op = getPrecedence(look.tag);
+//             move();
+//             ExprNode rhs = null;
+//             if (look.tag == Tag.ID)
+//             {
+//                 rhs = new IdentifierNode();
+//                 ((IdentifierNode)rhs).accept(this);
+//             }
+//             else if (look.tag == Tag.NUM)
+//             {
+//                 rhs = new NumNode();
+//                 ((NumNode)rhs).accept(this);
+//             }
+//             else if (look.tag == Tag.REAL)
+//             {
+//                 rhs = new RealNode();
+//                 ((RealNode)rhs).accept(this);
+//             }
+//             else if (look.tag == Tag.TRUE || look.tag == Tag.FALSE)
+//             {
+//                 rhs = new BooleanNode();
+//                 ((BooleanNode)rhs).accept(this);
+//             }
+//             else if (look.tag == '(')
+//             {
+//                 rhs = new ParenNode();
+//                 ((ParenNode)rhs).accept(this);
+//             }
+//             while (getPrecedence(look.tag) > op)
+//             {
+//                 rhs = parseBinExprNode(rhs, getPrecedence(look.tag));
+//             }
+//             lhs = new BinExprNode(token_op, lhs, rhs);
+//             lhs.type = rhs.type;
+//         }
+//         return lhs;
+//     }
+Node parseBinExprNode(Node lhs, int precedence){
+        while(getPrecedence(look.tag)>= precedence){
+            Token token_op=look;
+            int op= getPrecedence(look.tag);
             move();
-            ExprNode rhs = null;
-            if (look.tag == Tag.ID)
-            {
-                rhs = new IdentifierNode();
+     //       for(int i=0; i<level;i++){ System.out.print(indent); }
+
+            Node rhs= null;
+            if(look.tag=='('){
+                rhs=new ParenthesesNode();
+       //         level++;
+                ((ParenthesesNode)rhs).accept(this);
+         //       level--;
+            }
+            else if(look.tag== Tag.ID){
+                rhs= new IdentifierNode();
+           //     level++;
                 ((IdentifierNode)rhs).accept(this);
-            }
-            else if (look.tag == Tag.NUM)
-            {
-                rhs = new NumNode();
+             //   level--;
+                if(look.tag=='['){
+                    rhs=parseArrayAccessNode(((IdentifierNode)rhs));
+                }
+            }else if (look.tag==Tag.NUM){
+                rhs= new NumNode();
+               // level++;
                 ((NumNode)rhs).accept(this);
-            }
-            else if (look.tag == Tag.REAL)
-            {
-                rhs = new RealNode();
+                //level--;
+            }else if(look.tag==Tag.REAL){
+                rhs= new RealNode();
+                //level++;
                 ((RealNode)rhs).accept(this);
+            //    level--;
             }
-            else if (look.tag == Tag.TRUE || look.tag == Tag.FALSE)
-            {
-                rhs = new BooleanNode();
-                ((BooleanNode)rhs).accept(this);
+            //for(int i=0; i<level;i++){ System.out.print(indent); }
+            System.out.println(" operator"+look);
+
+            while(getPrecedence(look.tag)>op){
+                rhs= parseBinExprNode(rhs,getPrecedence(look.tag));
             }
-            else if (look.tag == '(')
-            {
-                rhs = new ParenNode();
-                ((ParenNode)rhs).accept(this);
-            }
-            while (getPrecedence(look.tag) > op)
-            {
-                rhs = parseBinExprNode(rhs, getPrecedence(look.tag));
-            }
-            lhs = new BinExprNode(token_op, lhs, rhs);
-            lhs.type = rhs.type;
+            lhs= new BinExprNode(token_op,lhs,rhs);
+
         }
         return lhs;
     }
-
     public void visit(BreakNode n)
     {
         match(Tag.BREAK);
@@ -742,7 +785,7 @@ public class Parser extends ASTVisitor
         }
         if (look.tag != ')')
         {
-            n.node = (BinExprNode) parseBinExprNode(((ExprNode)n.node), 0);
+            n.node =  parseBinExprNode(n.node, 0);
 	}
 
         match(')');
