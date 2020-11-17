@@ -519,7 +519,7 @@ public class Parser extends ASTVisitor
             n.condition = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
         match(')');
-        n.stmt = new Statements();
+        n.stmt = new StatementNode();
         n.stmt.accept(this);
     }
 
@@ -541,6 +541,7 @@ public class Parser extends ASTVisitor
     public void visit(DoWhileNode n)
     {
         match(Tag.DO);
+	while(look.tag != Tag.While){
         switch (look.tag)
         {
             case Tag.ID:
@@ -568,6 +569,7 @@ public class Parser extends ASTVisitor
                 (n.stmt).accept(this);
                 break;
         }
+	}
         match(Tag.WHILE);
         match('(');
         ExprNode rhs_assign = null;
