@@ -716,28 +716,28 @@ public class Parser extends ASTVisitor
         ExprNode rhs_assign = null;
         if (look.tag == Tag.ID)
         {
-            rhs_assign = new IdentifierNode();
+            //rhs_assign = new IdentifierNode();
 	    System.out.println("Inside Parenthesis node");
             ((IdentifierNode)rhs_assign).accept(this);
 	    System.out.println("Type: " + rhs_assign.type);
         }
         else if (look.tag == Tag.NUM)
         {
-            rhs_assign = new NumNode();
+            //rhs_assign = new NumNode();
             ((NumNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.REAL)
         {
-            rhs_assign = new RealNode();
+            //rhs_assign = new RealNode();
             ((RealNode)rhs_assign).accept(this);
         }
         else if (look.tag == Tag.TRUE || look.tag == Tag.FALSE)
         {
-            rhs_assign = new BooleanNode();
+            //rhs_assign = new BooleanNode();
             ((BooleanNode)rhs_assign).accept(this);
         } else if (look.tag == '(')
         {
-            rhs_assign = new ParenNode();
+            //rhs_assign = new ParenNode();
             ((ParenNode)rhs_assign).accept(this);
         }
         if (look.tag == ')')
@@ -745,7 +745,7 @@ public class Parser extends ASTVisitor
             n.node = rhs_assign;
         }
         else
-            n.node = (ExprNode) parseBinExprNode(rhs_assign, 0);
+            n.node = (BinExprNode) parseBinExprNode(rhs_assign, 0);
 
         match(')');
 	
