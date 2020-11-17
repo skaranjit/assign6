@@ -228,7 +228,7 @@ public class TypeChecker extends ASTVisitor
             ((ParenNode)n.right).accept(this);
         else{
             ((BinExprNode)n.right).accept(this);
-            rightType = ((BinExprNode)n.right).type;
+            //rightType = ((BinExprNode)n.right).type;
         }
 
 
