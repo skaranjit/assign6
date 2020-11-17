@@ -389,9 +389,9 @@ Node parseBinExprNode(Node lhs, int precedence){
 
             Node rhs= null;
             if(look.tag=='('){
-                rhs=new ParenthesesNode();
+                rhs=new ParenNode();
        //         level++;
-                ((ParenthesesNode)rhs).accept(this);
+                ((ParenNode)rhs).accept(this);
          //       level--;
             }
             else if(look.tag== Tag.ID){
