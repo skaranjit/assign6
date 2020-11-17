@@ -578,6 +578,7 @@ public class Parser extends ASTVisitor
 	}
         match(Tag.WHILE);
         match('(');
+	System.out.println("Inside DoWhile While node");
         ExprNode rhs_assign = null;
         if (look.tag == Tag.ID)
         {
@@ -712,12 +713,12 @@ public class Parser extends ASTVisitor
     public void visit(ParenNode n)
     {
         match('(');
-
+	System.out.println("Inside Parenthesis node");
         ExprNode rhs_assign = null;
         if (look.tag == Tag.ID)
         {
             rhs_assign = new IdentifierNode();
-	    System.out.println("Inside Parenthesis node");
+	    System.out.println("Inside Parenthesis Identifier node");
             ((IdentifierNode)rhs_assign).accept(this);
 	    System.out.println("Type: " + rhs_assign.type);
         }
