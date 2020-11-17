@@ -200,6 +200,8 @@ public class Parser extends ASTVisitor
 	    	case Tag.BASIC:
 			n.stmt = new DeclarationNode();
             		n.decl.accept(this);
+			n.stmts = new Statements();
+			n.stmts.accept(this);
 			break;
                 case Tag.ID:
                     n.stmt = new AssignmentNode();
