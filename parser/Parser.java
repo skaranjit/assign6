@@ -749,7 +749,7 @@ public class Parser extends ASTVisitor
 
         match(')');
 	
-	  n.type = n.node.type;
+	  n.type = rhs_assign.type;
 	  System.out.println("Mytype: "+ n.type);
     }
 
