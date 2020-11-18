@@ -94,11 +94,11 @@ public class TypeChecker extends ASTVisitor
     public void visit(Declarations n)
     {
         System.out.println("visiting Declarations");
-//         if(n.decls != null)
-//         {
-//             n.decl.accept(this);
-//             n.decls.accept(this);
-//         }
+        if(n.decls != null)
+        {
+            n.decl.accept(this);
+            n.decls.accept(this);
+        }
     }
 
     public void visit(DeclarationNode n)
@@ -120,11 +120,11 @@ public class TypeChecker extends ASTVisitor
     public void visit (Statements n)
     {
         System.out.println("Visiting Statements");
-//        if (n.stmts != null)
-//        {
-//             n.stmt.accept(this);
-//             n.stmts.accept(this);
-//         }
+       if (n.stmts != null)
+       {
+            n.stmt.accept(this);
+            n.stmts.accept(this);
+        }
     }
 
     public void visit(ParenNode n) {
@@ -198,7 +198,7 @@ public class TypeChecker extends ASTVisitor
     public void visit(BreakNode n)
     {
         System.out.println("visiting BreakNode");
-        if (whileLoop || doLoop){
+        if (!whileLoop || !doLoop){
             error("Break called outside of loop");
         }
     }
@@ -230,7 +230,7 @@ public class TypeChecker extends ASTVisitor
             ((ParenNode)n.right).accept(this);
         else{
             ((BinExprNode)n.right).accept(this);
-            //rightType = ((BinExprNode)n.right).type;
+            rightType = ((BinExprNode)n.right).type;
         }
 
 	rightType = n.right.type;
