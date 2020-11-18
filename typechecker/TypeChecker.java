@@ -239,7 +239,7 @@ public class TypeChecker extends ASTVisitor
             println("************* leftType is Type.Int");
         if(leftType != rightType)
         {
-            error("The right-hand side of an assignment of type: " + rightType + " is incompatible to the left-hand side "+leftId.id);
+            error("The right-hand side of an assignment of type: " + rightType + " is incompatible to the left-hand side "+leftId.id +" of type: " +leftType);
         }
     }
 
