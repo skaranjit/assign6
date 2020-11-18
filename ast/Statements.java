@@ -7,6 +7,7 @@ public class Statements extends Node
 {
     public Statements stmts;
     public StatementNode stmt;
+    public DeclarationNode decls;
     public Statements()
     {
 
