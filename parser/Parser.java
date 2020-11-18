@@ -101,6 +101,7 @@ public class Parser extends ASTVisitor
         n.stmts = new Statements();
         n.stmts.accept(this);
         match('}');
+	println("End of Block Statement");
         top = n.sTable; // new code
     }
 
