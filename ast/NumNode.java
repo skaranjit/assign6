@@ -3,7 +3,7 @@ package assign6.ast;
 import assign6.lexer.*;
 import assign6.visitor.*;
 
-public class NumNode extends Node
+public class NumNode extends ExprNode
 {
     public int value;
     public Num v;
