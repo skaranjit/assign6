@@ -120,11 +120,11 @@ public class TypeChecker extends ASTVisitor
     public void visit (Statements n)
     {
         System.out.println("Visiting Statements");
-       if (n.stmts != null)
-       {
-            n.stmt.accept(this);
-            n.stmts.accept(this);
-        }
+//        if (n.stmts != null)
+//        {
+//             n.stmt.accept(this);
+//             n.stmts.accept(this);
+//         }
     }
 
     public void visit(ParenNode n) {
