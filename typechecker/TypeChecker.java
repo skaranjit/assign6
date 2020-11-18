@@ -123,7 +123,7 @@ public class TypeChecker extends ASTVisitor
        if (n.stmts != null)
        {
        	   if(n.stmt != null) n.stmt.accept(this);
-	   if(n.decl != null) n.decls.accept(this);
+	   if(n.decls != null) n.decls.accept(this);
             n.stmts.accept(this);
         }
     }
