@@ -19,7 +19,7 @@ public class Unparser extends ASTVisitor
     {
         try
         {
-            tempFile = new File("src\\assign6\\output.txt");
+            tempFile = new File("output.txt");
             tempFileWriter = new FileWriter(tempFile);
             System.out.println("\n** Output.txt created successfully! ** ");
         }
