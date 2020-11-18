@@ -323,7 +323,7 @@ public class TypeChecker extends ASTVisitor
 	println (n.w + " in Identifier Node");
 // 		println("Variable is already declared: " +n.w);
 // 	}
-// 	println("Type: " + n.type);
+ 	println("Type: " + n.type);
 //         if(n.type == null){
 // 		error("Syntax error: Variable " + n.id + " not declared. Cannot use undeclared variable.");
 // 	}
