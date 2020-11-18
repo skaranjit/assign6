@@ -94,11 +94,11 @@ public class TypeChecker extends ASTVisitor
     public void visit(Declarations n)
     {
         System.out.println("visiting Declarations");
-        if(n.decls != null)
-        {
-            n.decl.accept(this);
-            n.decls.accept(this);
-        }
+//         if(n.decls != null)
+//         {
+//             n.decl.accept(this);
+//             n.decls.accept(this);
+//         }
     }
 
     public void visit(DeclarationNode n)
