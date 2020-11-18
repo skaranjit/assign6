@@ -3,11 +3,11 @@ package assign6.ast;
 import assign6.visitor.*;
 
 
-public class DeclarationNode extends StatementNode
+public class DeclarationNode extends Node
 {
     public TypeNode type;
     public IdentifierNode id;
-
+   
     public DeclarationNode()
     {
 
