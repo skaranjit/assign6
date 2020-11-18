@@ -152,7 +152,8 @@ public class Unparser extends ASTVisitor
     public void visit(Statements n)
     {
         if (n.stmts != null){
-            //n.stmt.accept(this);
+            if(n.stmt!= null)n.stmt.accept(this);
+             if(n.decls!= null)n.decls.accept(this);
             n.stmts.accept(this);
         }
     }
