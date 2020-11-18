@@ -198,7 +198,7 @@ public class TypeChecker extends ASTVisitor
     public void visit(BreakNode n)
     {
         System.out.println("visiting BreakNode");
-        if (!whileLoop || !doLoop){
+        if (!whileLoop){
             error("Break called outside of loop");
         }
     }
