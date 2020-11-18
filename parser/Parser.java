@@ -286,13 +286,13 @@ public class Parser extends ASTVisitor
         {
             rhs_assign = new NumNode();
             ((NumNode)rhs_assign).accept(this);
-            n.right.type = Type.Int;
+            rhs_assign.type = Type.Int;
         }
         else if (look.tag == Tag.REAL)
         {
             rhs_assign = new RealNode();
             ((RealNode)rhs_assign).accept(this);
-            n.right.type = Type.Float;
+            rhs_assign.type = Type.Float;
         }
         else if (look.tag == Tag.TRUE || look.tag == Tag.FALSE)
         {
@@ -304,7 +304,7 @@ public class Parser extends ASTVisitor
         {
             rhs_assign = new ParenNode();
             ((ParenNode)rhs_assign).accept(this);
-            n.right.type = ((ParenNode)rhs_assign).type;
+            rhs_assign.type = ((ParenNode)rhs_assign).type;
         }
         if (look.tag == ';')
         {
