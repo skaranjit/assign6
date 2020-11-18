@@ -199,8 +199,8 @@ public class Parser extends ASTVisitor
             switch (look.tag)
             {
 	    	case Tag.BASIC:
-			n.decl = new DeclarationNode();
-            		n.decl.accept(this);
+			n.stmt = new DeclarationNode();
+            		n.stmt.accept(this);
 			n.stmts = new Statements();
 			n.stmts.accept(this);
 			break;
