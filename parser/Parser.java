@@ -194,7 +194,7 @@ public class Parser extends ASTVisitor
 
     public void visit (Statements n)
     {
-        if (look.tag != '}' && look.tag != Tag.EOF) // new line of code
+        if (look.toString().equals("}") && look.tag != Tag.EOF) // new line of code
         {
             switch (look.tag)
             {
