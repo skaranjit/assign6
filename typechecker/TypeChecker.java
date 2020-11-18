@@ -273,7 +273,7 @@ public class TypeChecker extends ASTVisitor
             ((BinExprNode) n.left).accept(this);
 
         Type rightType = null;
-
+	 IdentifierNode rightId = null;
         if (n.right != null) {
             if (n.right instanceof IdentifierNode) {
                 ((IdentifierNode) n.right).accept(this);
