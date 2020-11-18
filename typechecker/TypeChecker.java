@@ -318,9 +318,9 @@ public class TypeChecker extends ASTVisitor
     public void visit(IdentifierNode n)
     {
         System.out.println("visiting IdentifierNode");
-	if(top.get(n.w) == null){
-		println("Variable is already declared: " +n.w);
-	}
+// 	if(top.get(n.w) == null){
+// 		println("Variable is already declared: " +n.w);
+// 	}
 // 	println("Type: " + n.type);
 //         if(n.type == null){
 // 		error("Syntax error: Variable " + n.id + " not declared. Cannot use undeclared variable.");
