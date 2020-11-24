@@ -317,7 +317,7 @@ public class TypeChecker extends ASTVisitor
     public void visit(IdentifierNode n)
     {
         System.out.println("visiting IdentifierNode");
-	if(top.get(n.w) != null) println(n.w +" in symbol table");
+	if(top.get(n.w) != null) n = top.get(n.w);
 	println (n.w + " in Identifier Node");
 // 		println("Variable is already declared: " +n.w);
 // 	}
