@@ -94,7 +94,6 @@ public class TypeChecker extends ASTVisitor
     {
         System.out.println("visiting DeclarationNode");
         n.type.accept(this);
-	if(top.get(n.id.w) != null) error("Variable already declared.");
         n.id.accept(this);
 	
     }
