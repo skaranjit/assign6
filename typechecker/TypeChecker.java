@@ -12,6 +12,7 @@ public class TypeChecker extends ASTVisitor
     public CompilationUnit cu = null;
     public boolean whileLoop = false;
     public boolean doLoop = false;
+    public boolean isBool = false; 
 
     int level = 0;
     String indent = "...";
@@ -290,7 +291,11 @@ public class TypeChecker extends ASTVisitor
         } else {
             System.out.println("@@@ n.right == null in BinExprNode: " + n.right);
         }
-	System.out.println("@@@@ Operator: " + n.op);
+	String[] boolOperator = {">=",">","<","<=","==","!="};
+	if(Arrays.asList(boolOperator).contains(n.op.toString())){
+		isBool = true;
+	}
+	else isBool = false;
         if (leftType == Type.Float || rightType == Type.Float) {
             n.type = Type.Float;
         } else {
