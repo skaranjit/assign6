@@ -149,13 +149,14 @@ public class TypeChecker extends ASTVisitor
 
     public void visit(DoWhileNode n)
     {
-        doLoop = true;
         System.out.println("visiting DoWhileNode");
-       
+        whileLoop = true;
+
         n.stmt.accept(this);
-         
+        whileLoop = false;
+
         n.condition.accept(this);
-        doLoop = false;
+                whileLoop = true;
     }
 
     public void visit (ArrayIDNode n)
