@@ -273,7 +273,7 @@ public class Parser extends ASTVisitor
         {
             rhs_assign = new IdentifierNode();
             ((IdentifierNode)rhs_assign).accept(this);
-            println(top.get(((IdentifierNode)rhs_assign).w).type.toString());
+           // println(top.get(((IdentifierNode)rhs_assign).w).type.toString());
             if (top.get(((IdentifierNode)rhs_assign).w)==null){
                 error("Variable Must be Declared");
             }else {
