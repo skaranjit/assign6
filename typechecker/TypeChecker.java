@@ -61,32 +61,19 @@ public class TypeChecker extends ASTVisitor
     {
         System.out.print(" ");
     }
-//    void error (String s) throws Error{
-//	throw new Error ("near line " + this.parser.lexer.line + ": " + s);
-//    }
 
-//    public Type getType(IdentifierNode a){
-//        String x = a.id;
-//	if(!(top.table.containsKey(x)))
-//	{
-//		 error("Variable " + x +" has not been declared.");
-//	}
-//	return top.table.get(x);
-//    }
     public void visit (CompilationUnit n)
     {
         System.out.println("\nTypechecker starts");
-//        top = new Env();
-//        top = n.symbolTable;
-//        visit(n.block);
+
         n.block.accept(this);
     }
 
     public void visit (BlockStatementNode n)
     {
         System.out.println("visiting Block");
-// 	top = new Env(top);
-// 	top = n.sTable.prev;
+	top = new Env(top);
+	top = n.sTable.prev;
         n.decls.accept(this);
         n.stmts.accept(this);
     }
@@ -199,9 +186,9 @@ public class TypeChecker extends ASTVisitor
     public void visit(BreakNode n)
     {
         System.out.println("visiting BreakNode");
-//         if (whileLoop == false){
-//             error("Break called outside of loop");
-//         }
+        if (whileLoop == false){
+            error("Break called outside of loop");
+        }
     }
 
     public void visit(AssignmentNode n)
@@ -303,6 +290,7 @@ public class TypeChecker extends ASTVisitor
         } else {
             System.out.println("@@@ n.right == null in BinExprNode: " + n.right);
         }
+	System.out.println("@@@@ Operator: " + n.op);
         if (leftType == Type.Float || rightType == Type.Float) {
             n.type = Type.Float;
         } else {
