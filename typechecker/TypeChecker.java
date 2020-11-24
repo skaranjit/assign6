@@ -94,7 +94,9 @@ public class TypeChecker extends ASTVisitor
     {
         System.out.println("visiting DeclarationNode");
         n.type.accept(this);
+	if(top.get(n.id.w) != null) error("Variable already declared.");
         n.id.accept(this);
+	
     }
 
     public void visit(TypeNode n)
@@ -319,12 +321,10 @@ public class TypeChecker extends ASTVisitor
         System.out.println("visiting IdentifierNode");
 	if(top.get(n.w) != null) n = top.get(n.w);
 	println (n.w + " in Identifier Node");
-// 		println("Variable is already declared: " +n.w);
-// 	}
  	println("Type: " + n.type);
-//         if(n.type == null){
-// 		error("Syntax error: Variable " + n.id + " not declared. Cannot use undeclared variable.");
-// 	}
+        if(n.type == null){
+		error("Syntax error: Variable " + n.id + " not declared. Cannot use undeclared variable.");
+	}
 	
         if (n.array != null)
         {
