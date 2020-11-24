@@ -129,6 +129,7 @@ public class TypeChecker extends ASTVisitor
 //             error("Conditional Must be Boolean");
 //         }
         n.condition.accept(this);
+	if(!isBool) error("Conditional must be boolean");
         n.stmt.accept(this);
         if (n.elseStmt != null)
         {
@@ -143,6 +144,7 @@ public class TypeChecker extends ASTVisitor
         System.out.println("visiting WhileNode");
        
         n.condition.accept(this);
+	if(!isBool) error("Conditional must be boolean");
         n.stmt.accept(this);
         whileLoop = false;
     }
@@ -156,6 +158,7 @@ public class TypeChecker extends ASTVisitor
         whileLoop = false;
 
         n.condition.accept(this);
+	if(!isBool) error("Conditional must be boolean");
                 whileLoop = true;
     }
 
